@@ -23,7 +23,6 @@
 #include <QtSql>
 #include <QPainter>
 #include <QBitmap>
-#include <QAxWidget>
 #include <QtGui>
 #include "database.h"
 
