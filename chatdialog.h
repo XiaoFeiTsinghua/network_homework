@@ -38,6 +38,7 @@ private slots:
 signals:
     void send_msg(QString id, QString msg);
 
+
 private:
     Ui::ChatDialog *ui;
     QString msg_tobesent;
