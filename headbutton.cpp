@@ -5,39 +5,19 @@ HeadButton::HeadButton(QWidget *parent) :
 {
 }
 
-HeadButton::HeadButton(QPixmap icon_not, QPixmap icon, QWidget *parent) :
+HeadButton::HeadButton(QString filename, QWidget *parent) :
     QPushButton(parent)
 {
     this->setFlat(true);
-    this->setStyleSheet("QPushButton{border:none;}");
+    QString s = "QPushButton{border:none;}";
+    QString s1 = "QPushButton{background-image: url(:/qq/" + filename + "_normal.png);background-repeat: repeat-none; background-position:center;}";
+    QString s2 = "QPushButton:hover{background-image: url(:/qq/" + filename + "_hover.png);background-repeat: repeat-none; background-position:center;}";
+    QString s3 = "QPushButton:checked{background-image: url(:/qq/" + filename + "_selected.png);background-repeat: repeat-none; background-position:center;}";
+    this->setStyleSheet(s + s1 + s2 + s3);
     this->setCheckable(true);
 
     this->resize(50, 30);
-    icon_not_chosen = new QPixmap();
-    *icon_not_chosen = icon_not;
-    icon_chosen = new QPixmap();
-    *icon_chosen = icon;
-    flag = 0;
-    not_chosen();
+
 }
 
-void HeadButton::not_chosen()
-{
-    this->setIcon(QIcon(*icon_not_chosen));
-    this->setIconSize(QSize(50, 30));
-}
 
-void HeadButton::chosen()
-{
-    this->setFlat(true);
-    this->setIcon(QIcon(*icon_chosen));
-    this->setIconSize(QSize(50, 30));
-}
-
-void HeadButton::refresh()
-{
-    if(this->isChecked())
-        chosen();
-    else
-        not_chosen();
-}

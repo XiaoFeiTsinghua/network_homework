@@ -7,9 +7,9 @@
 ChooseWidget::ChooseWidget(QWidget *parent) :
     QWidget(parent)
 {
-    chats = new HeadButton(QPixmap(":/image/chats_not_chosen"), QPixmap(":/image/chats_chosen"), this);
-    friends = new HeadButton(QPixmap(":/image/friends_not_chosen"), QPixmap(":/image/friends_chosen"), this);
-    groups = new HeadButton(QPixmap(":/image/groups_not_chosen"), QPixmap(":/image/groups_chosen"), this);
+    chats = new HeadButton("icon_last", this);
+    friends = new HeadButton("icon_contacts", this);
+    groups = new HeadButton("icon_group", this);
     choice = new QButtonGroup(this);
     friendstree = new QTreeWidget(this);
     deletefriendAction = new QAction(tr("删除好友"), this);
@@ -20,9 +20,9 @@ ChooseWidget::ChooseWidget(QString name, QWidget *parent) :
     QWidget(parent)
 {
     username = name;
-    chats = new HeadButton(QPixmap(":/image/chats_not_chosen"), QPixmap(":/image/chats_chosen"), this);
-    friends = new HeadButton(QPixmap(":/image/friends_not_chosen"), QPixmap(":/image/friends_chosen"), this);
-    groups = new HeadButton(QPixmap(":/image/groups_not_chosen"), QPixmap(":/image/groups_chosen"), this);
+    chats = new HeadButton("icon_last", this);
+    friends = new HeadButton("icon_contacts", this);
+    groups = new HeadButton("icon_group", this);
     choice = new QButtonGroup(this);
     friendstree = new QTreeWidget(this);
     friendstree->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -61,6 +61,7 @@ void ChooseWidget::init()
 
 void ChooseWidget::init_friends()
 {
+    qDebug()<<"init_friends"<<username;
     num_of_friends = getFriendsnum(username);
     num_of_groups = getGroupsnum(username);
     roots.resize(num_of_groups);
@@ -100,9 +101,6 @@ void ChooseWidget::x_chosen()
 
 void ChooseWidget::refresh()
 {
-    chats->refresh();
-    friends->refresh();
-    groups->refresh();
     int id = choice->checkedId();
     switch (id)
     {
@@ -121,6 +119,7 @@ void ChooseWidget::refresh()
 
 void ChooseWidget::refresh_friends()
 {
+    qDebug()<<"refresh";
     for(int i = 0; i < childs.size(); i++)
     {
         //qDebug()<<i;

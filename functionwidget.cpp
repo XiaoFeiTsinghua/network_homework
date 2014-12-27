@@ -31,6 +31,12 @@ FunctionWidget::FunctionWidget(QString name, QWidget *parent) :
 void FunctionWidget::addfriend()
 {
     qDebug()<<"add";
+    if(addfriendw != NULL)
+    {
+        delete addfriendw;
+        addfriendw = NULL;
+        addfriendw = new AddfriendWidget(username);
+    }
     addfriendw->show();
 }
 
@@ -43,6 +49,12 @@ void FunctionWidget::friendinfoRecv(friendinfo fi)
 void FunctionWidget::addgroup()
 {
     qDebug()<<"addgroup";
+    if(addgroupw != NULL)
+    {
+        delete addgroupw;
+        addgroupw = NULL;
+        addgroupw = new AddgroupWidget(username);
+    }
     addgroupw->show();
 }
 

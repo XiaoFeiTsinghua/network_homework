@@ -74,7 +74,8 @@ void AddfriendWidget::emit_signal_infosend()
     fi.name = nameEdit->text();
     fi.studentnum = studentnumEdit->text();
     fi.belongto = groupBox->currentIndex() + 1;
-    fi.photo = "1";
+    fi.photo = "system_photo" + QString::number(photoBox->currentIndex() + 1, 10);
+    //qDebug() << fi.photo;
     fi.sign = signEdit->text();
     newFriend(username, fi);
     emit infoSend(fi);

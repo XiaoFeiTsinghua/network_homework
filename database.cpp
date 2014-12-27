@@ -69,6 +69,42 @@ void addUser(QString username)
     }
 }
 
+int getUsernum()
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");    //添加数据库驱动
+
+    db.setDatabaseName("history.db");  //在工程目录新建一个mytest.db的文件
+    if(!db.open())
+    {
+        qDebug()<<"cannot open database";
+    }
+    QSqlQuery query;//以下执行相关QSL语句
+    query.exec("select id from loghistory where id >= 1");
+    query.last();
+    int usernum = query.value(0).toInt();
+    //qDebug()<< "usernum" << usernum;
+    return usernum;
+}
+
+QString getUser(int id)
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");    //添加数据库驱动
+
+    db.setDatabaseName("history.db");  //在工程目录新建一个mytest.db的文件
+    if(!db.open())
+    {
+        qDebug()<<"cannot open database";
+    }
+    QSqlQuery query;//以下执行相关QSL语句
+    query.exec("select studentnum from loghistory where id == " + QString::number(id, 10));
+    qDebug()<<"select studentnum from loghistory where id == " + QString::number(id, 10);
+    query.next();
+    QString studentnum;
+    studentnum = query.value(0).toString();
+    qDebug()<<studentnum;
+    return studentnum;
+}
+
 void newDatabase(QString username)
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");    //添加数据库驱动

@@ -95,15 +95,23 @@ void Widget::init()
 
     exitButton->resize(20, 20);
     exitButton->move(255, 0);
-    exitButton->setIcon(QIcon(":/image/close"));
-    exitButton->setStyleSheet("border:none; background-color:transparent;");
+    //exitButton->setIcon(QIcon(":/image/close"));
+    //exitButton->setStyleSheet("border:none; background-color:transparent;");
+    exitButton->setStyleSheet("QPushButton{border:none;}"
+                              "QPushButton{background-image: url(:/qq/tips_close_n.png);background-repeat: repeat-none; background-position:center;}"
+                              "QPushButton:hover{background-image: url(:/qq/tips_close_h.png);background-repeat: repeat-none; background-position:center;}"
+                              "QPushButton:pressed{background-image: url(:/qq/tips_close_p.png);background-repeat: repeat-none; background-position:center;}"
+                              );
 
     minButton->resize(20, 20);
     minButton->move(235, 0);
-    minButton->setIcon(QIcon(":/image/min"));
-    minButton->setStyleSheet("border:none; background-color:transparent;");
-    //deleteFriend(username, 5);
-    //deleteGroup(username, 3);
+    //minButton->setIcon(QIcon(":/image/min"));
+    //minButton->setStyleSheet("border:none; background-color:transparent;");
+    minButton->setStyleSheet("QPushButton{border:none;}"
+                              "QPushButton{border-image: url(:/qq/btn_mini_normal.png);background-repeat: repeat-none; background-position:center;}"
+                              "QPushButton:hover{border-image: url(:/qq/btn_mini_down.png);background-repeat: repeat-none; background-position:center;}"
+                              "QPushButton:pressed{border-image: url(:/qq/btn_mini_down.png);background-repeat: repeat-none; background-position:center;}"
+                              );
 }
 
 
@@ -274,18 +282,7 @@ void Widget::read_tcp()
 
 void Widget::mouseMoveEvent(QMouseEvent *e)
 {
-    if(inButton(exitButton, e->pos()))
-        exitButton->setStyleSheet("border:none; background-color: rgb(255, 0, 4);");
-    else
-        exitButton->setStyleSheet("border:none; background-color:transparent;");
-
-    if(inButton(minButton, e->pos()))
-        minButton->setStyleSheet("border:none; background-color: rgba(255, 0, 0, 100);");
-    else
-        minButton->setStyleSheet("border:none; background-color:transparent;");
-
-
-    if (e->buttons() == Qt::LeftButton)
+   if (e->buttons() == Qt::LeftButton)
            move(e->globalPos() - pPos);
 }
 

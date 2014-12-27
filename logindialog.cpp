@@ -64,7 +64,10 @@ void LoginDialog::beautify()
 
     logoLabel->resize(400,190);
     logoLabel->move(0, -18);
-    logoLabel->setPixmap(QPixmap(":/image/logo"));
+    QMovie *movie = new QMovie(":/gif/logbackground.gif");
+    logoLabel->setMovie(movie);
+    movie->start();
+    //logoLabel->setPixmap(QPixmap(":/image/logo"));
 
     photoLabel->resize(50,50);
     photoLabel->move(30,200);
@@ -73,32 +76,76 @@ void LoginDialog::beautify()
     userCombo->resize(200, 30);
     userCombo->move(100, 180);
     userCombo->setEditable(true);
+    userCombo->setStyleSheet("QComboBox{ border: 1px solid rgb(173,173,173);}"
+                             "QComboBox{ border-radius: 3px;}"
+                             "QComboBox QAbstractItemView::item{height:25px;}"
+                             "QComboBox::down-arrow{image:url(:/qq/arrow_normal);}"
+                             "QComboBox::drop-down{border:0px;}"
+                             "QComboBox::hover{border-color: rgb(9, 163, 220);}"
+                             "QComboBox::down-arrow:hover{image:url(:/qq/arrow_hover);}");
 
     keyEdit->resize(200, 30);
     keyEdit->move(100, 210);
     keyEdit->setEchoMode(QLineEdit::Password);
+    keyEdit->setStyleSheet("QLineEdit{ border: 1px solid rgb(173,173,173);}"
+                           "QLineEdit{ border-radius: 3px;}"
+                           "QLineEdit::hover{border-color: rgb(9, 163, 220);}");
 
     autologCheck->resize(100,20);
-    autologCheck->move(100,245);
+    autologCheck->move(200,245);
     autologCheck->setText("自动登录");
+    autologCheck->setStyleSheet("QCheckBox::indicator:unchecked{image: url(:/qq/checkbox_uncheck_normal.png);}"
+                                "QCheckBox::indicator:unchecked:hover {image: url(:/qq/checkbox_uncheck_hightlight.png)}"
+                                "QCheckBox::indicator:unchecked:pressed {image: url(:/qq/checkbox_uncheck_hightlight.png);}"
+                                "QCheckBox::indicator:checked {image: url(:/qq/checkbox_check_normal.png);}"
+                                "QCheckBox::indicator:checked:hover {image: url(:/qq/checkbox_check_hightlight.png);}"
+                                "QCheckBox::indicator:checked:pressed {image: url(:/qq/checkbox_check_hightlight.png);}"
+                                "QCheckBox{font: 12px Microsoft YaHei;}"
+                                "QCheckBox{color: gray;}"
+                                );
+
 
     rememberCheck->resize(100,20);
-    rememberCheck->move(200,245);
+    rememberCheck->move(100,245);
     rememberCheck->setText("记住密码");
+    rememberCheck->setStyleSheet("QCheckBox::indicator:unchecked{image: url(:/qq/checkbox_uncheck_normal.png);}"
+                                "QCheckBox::indicator:unchecked:hover {image: url(:/qq/checkbox_uncheck_hightlight.png)}"
+                                "QCheckBox::indicator:unchecked:pressed {image: url(:/qq/checkbox_uncheck_hightlight.png);}"
+                                "QCheckBox::indicator:checked {image: url(:/qq/checkbox_check_normal.png);}"
+                                "QCheckBox::indicator:checked:hover {image: url(:/qq/checkbox_check_hightlight.png);}"
+                                "QCheckBox::indicator:checked:pressed {image: url(:/qq/checkbox_check_hightlight.png);}"
+                                 "QCheckBox{font: 12px Microsoft YaHei;}"
+                                 "QCheckBox{color: gray;}"
+                                );
 
     loginButton->resize(200, 30);
     loginButton->move(100, 270);
-    loginButton->setText("登录");
+    loginButton->setText("登    录");
+    loginButton->setFlat(true);
+    loginButton->setStyleSheet("QPushButton{border:none;border-radius:3px;}"
+                               "QPushButton{background:rgb(9, 163, 220);}"
+                               "QPushButton:hover{background:rgb(60, 195, 245);}"
+                               "QPushButton:pressed{background:rgb(9, 140, 188);}"
+                               "QPushButton{font: 12px Microsoft YaHei;}"
+                               "QPushButton{color: white;}"
+                               );
 
-    exitButton->resize(20, 20);
-    exitButton->move(380, 0);
-    exitButton->setIcon(QIcon(":/image/close"));
-    exitButton->setStyleSheet("border:none; background-color:transparent;");
+    exitButton->resize(25, 25);
+    exitButton->move(375, 0);
+    exitButton->setStyleSheet("QPushButton{border:none;}"
+                              "QPushButton{background-image: url(:/qq/tips_close_n.png);background-repeat: repeat-none; background-position:center;}"
+                              "QPushButton:hover{background-image: url(:/qq/tips_close_h.png);background-repeat: repeat-none; background-position:center;}"
+                              "QPushButton:pressed{background-image: url(:/qq/tips_close_p.png);background-repeat: repeat-none; background-position:center;}"
+                              );
 
-    minButton->resize(20, 20);
-    minButton->move(360, 0);
-    minButton->setIcon(QIcon(":/image/min"));
-    minButton->setStyleSheet("border:none; background-color:transparent;");
+    minButton->resize(25, 25);
+    minButton->move(350, 0);
+    minButton->setStyleSheet("QPushButton{border:none;}"
+                              "QPushButton{border-image: url(:/qq/btn_mini_normal.png);background-repeat: repeat-none; background-position:center;}"
+                              "QPushButton:hover{border-image: url(:/qq/btn_mini_down.png);background-repeat: repeat-none; background-position:center;}"
+                              "QPushButton:pressed{border-image: url(:/qq/btn_mini_down.png);background-repeat: repeat-none; background-position:center;}"
+                              );
+
 }
 
 void LoginDialog::on_loginButton_clicked()
@@ -141,7 +188,13 @@ void LoginDialog::on_loginButton_clicked()
 
 void LoginDialog::init_userCombo()
 {
-
+    int num_of_users = getUsernum();
+    //qDebug()<<num_of_users;
+    for(int i = 0; i < num_of_users; i++)
+    {
+        QString studentnum = getUser(i + 1);
+        userCombo->addItem(studentnum);
+    }
 }
 
 void LoginDialog::init_keyEdit()
@@ -171,17 +224,6 @@ void LoginDialog::con()
 
 void LoginDialog::mouseMoveEvent(QMouseEvent *e)
 {
-    if(inButton(exitButton, e->pos()))
-        exitButton->setStyleSheet("border:none; background-color: rgb(255, 0, 0);");
-    else
-        exitButton->setStyleSheet("border:none; background-color:transparent;");
-
-    if(inButton(minButton, e->pos()))
-        minButton->setStyleSheet("border:none; background-color: rgba(255, 0, 0, 100);");
-    else
-        minButton->setStyleSheet("border:none; background-color:transparent;");
-
-
     if (e->buttons() == Qt::LeftButton)
            move(e->globalPos() - dPos);
 }

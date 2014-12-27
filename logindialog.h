@@ -24,6 +24,7 @@
 #include <QPainter>
 #include <QBitmap>
 #include <QtGui>
+#include <QMovie>
 #include "database.h"
 
 class LoginDialog : public QDialog

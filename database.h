@@ -29,8 +29,8 @@ void newHistroy();
 int getRemember();
 void setRemember(int flag);
 void addUser(QString username);
-int getUsernum();//还没写
-void getUser(int id);//还没写
+int getUsernum();
+QString getUser(int id);
 
 void newDatabase(QString username);
 void newFolder(QString username);
