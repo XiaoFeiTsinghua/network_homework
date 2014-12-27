@@ -23,7 +23,8 @@ private:
     AddgroupWidget *addgroupw;
 
 signals:
-    void added();//已经添加，需要刷新
+    void preparingadd();
+    void added();
 public slots:
     void addfriend();
     void addgroup();

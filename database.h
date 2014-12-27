@@ -13,6 +13,7 @@ struct groupinfo
     int id;
     QString name;
     int friendsingroup;
+    int expand;
 };
 
 struct friendinfo
@@ -23,11 +24,14 @@ struct friendinfo
     QString name;
     QString photo;
     QString sign;
+    int big;
 };
 
 void newHistroy();
 int getRemember();
+int getAuto();
 void setRemember(int flag);
+void setAuto(int flag);
 void addUser(QString username);
 int getUsernum();
 QString getUser(int id);
@@ -42,6 +46,8 @@ void newGroup(QString username, groupinfo newgi);
 void newFriend(QString username, friendinfo newfi);
 void deleteGroup(QString username, int id);
 void deleteFriend(QString username, int id);
+void setGroupexpand(QString username, int id, int expand);
+void setFriendbig(QString username, int id, int big);
 QString generateFilename();
 
 #endif // DATABASE_H

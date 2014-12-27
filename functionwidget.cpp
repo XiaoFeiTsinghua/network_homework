@@ -26,18 +26,23 @@ FunctionWidget::FunctionWidget(QString name, QWidget *parent) :
     connect(addfriendw, &AddfriendWidget::infoSend, this, &FunctionWidget::friendinfoRecv);
     connect(addgroupButton, &QPushButton::clicked, this, &FunctionWidget::addgroup);
     connect(addgroupw, &AddgroupWidget::infoSend, this, &FunctionWidget::groupinfoRecv);
+
 }
 
 void FunctionWidget::addfriend()
 {
+    emit preparingadd();
     qDebug()<<"add";
     if(addfriendw != NULL)
     {
         delete addfriendw;
         addfriendw = NULL;
         addfriendw = new AddfriendWidget(username);
+        //connect(addfriendButton, &QPushButton::clicked, this, &FunctionWidget::addfriend);
+        connect(addfriendw, &AddfriendWidget::infoSend, this, &FunctionWidget::friendinfoRecv);
     }
     addfriendw->show();
+
 }
 
 void FunctionWidget::friendinfoRecv(friendinfo fi)
@@ -48,14 +53,18 @@ void FunctionWidget::friendinfoRecv(friendinfo fi)
 
 void FunctionWidget::addgroup()
 {
+    emit preparingadd();
     qDebug()<<"addgroup";
     if(addgroupw != NULL)
     {
         delete addgroupw;
         addgroupw = NULL;
         addgroupw = new AddgroupWidget(username);
+        //connect(addgroupButton, &QPushButton::clicked, this, &FunctionWidget::addgroup);
+        connect(addgroupw, &AddgroupWidget::infoSend, this, &FunctionWidget::groupinfoRecv);
     }
     addgroupw->show();
+
 }
 
 void FunctionWidget::groupinfoRecv(groupinfo gi)

@@ -65,6 +65,8 @@ public slots:
     void show_deletefriend_menu(QPoint pos);
     void delete_friend();
     void delete_group();
+    void set_group_expand();
+    void set_friend_big();
 };
 
 #endif // CHOOSEWIDGET_H

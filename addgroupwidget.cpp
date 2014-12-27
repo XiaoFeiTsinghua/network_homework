@@ -32,6 +32,7 @@ void AddgroupWidget::emit_signal_infosend()
     gi.id = getGroupsnum(username) + 1;
     gi.name = nameEdit->text();
     gi.friendsingroup = 0;
+    gi.expand = 0;
     newGroup(username, gi);
     emit infoSend(gi);
     close();

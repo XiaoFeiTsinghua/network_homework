@@ -10,7 +10,7 @@ FriendWidget::FriendWidget(QWidget *parent) :
     qDebug()<<"1"<<endl;
 }
 
-FriendWidget::FriendWidget(int id, int bt, QString num, QPixmap p, QString n, QString s, QWidget *parent) :
+FriendWidget::FriendWidget(int id, int bt, QString num, QPixmap p, QString n, QString s, int b, QWidget *parent) :
     QWidget(parent),
     id(id)
 {
@@ -23,6 +23,7 @@ FriendWidget::FriendWidget(int id, int bt, QString num, QPixmap p, QString n, QS
     photopix = p;
     namestr = n;
     signstr = s;
+    big = b;
     init();
 }
 
@@ -63,4 +64,14 @@ void FriendWidget::choose()
 void FriendWidget::cancel_choose()
 {
     init();
+}
+
+int FriendWidget::isBig()
+{
+    return big;
+}
+
+void FriendWidget::setBig(int b)
+{
+    big = b;
 }

@@ -17,11 +17,6 @@ Widget::Widget(QWidget *parent) :
 
     chat_server = new QTcpServer(this);
     chat_server->listen(QHostAddress::Any, 55554);
-    connect(chat_server, SIGNAL(newConnection()), this, SLOT(receive_connection()));
-    connect(choosew, SIGNAL(to_up_msg(QString,QString)), this, SLOT(send_msg(QString, QString)));
-    connect(choosew, SIGNAL(new_conn(QString, QString)), this, SLOT(new_conn(QString, QString)));
-    connect(this, SIGNAL(rec_msg(QString,QString)), choosew, SLOT(from_up_msg(QString,QString)));
-    connect(functionw, &FunctionWidget::added, choosew, &ChooseWidget::refresh_friends);
 }
 
 Widget::Widget(QString name, QWidget *parent) :
@@ -68,6 +63,8 @@ Widget::Widget(QString name, QWidget *parent) :
     connect(this, SIGNAL(rec_msg(QString,QString)), choosew, SLOT(from_up_msg(QString,QString)));
     connect(exitButton, &QPushButton::clicked, this, &Widget::close);
     connect(functionw, &FunctionWidget::added, choosew, &ChooseWidget::refresh_friends);
+    connect(functionw, &FunctionWidget::preparingadd, choosew, &ChooseWidget::set_group_expand);
+    connect(functionw, &FunctionWidget::preparingadd, choosew, &ChooseWidget::set_friend_big);
 
     this->setMouseTracking(true);
     exitButton->setMouseTracking(true);
@@ -98,9 +95,9 @@ void Widget::init()
     //exitButton->setIcon(QIcon(":/image/close"));
     //exitButton->setStyleSheet("border:none; background-color:transparent;");
     exitButton->setStyleSheet("QPushButton{border:none;}"
-                              "QPushButton{background-image: url(:/qq/tips_close_n.png);background-repeat: repeat-none; background-position:center;}"
-                              "QPushButton:hover{background-image: url(:/qq/tips_close_h.png);background-repeat: repeat-none; background-position:center;}"
-                              "QPushButton:pressed{background-image: url(:/qq/tips_close_p.png);background-repeat: repeat-none; background-position:center;}"
+                              "QPushButton{background-image: url(:/qq/resource_image/tips_close_n.png);background-repeat: repeat-none; background-position:center;}"
+                              "QPushButton:hover{background-image: url(:/qq/resource_image/tips_close_h.png);background-repeat: repeat-none; background-position:center;}"
+                              "QPushButton:pressed{background-image: url(:/qq/resource_image/tips_close_p.png);background-repeat: repeat-none; background-position:center;}"
                               );
 
     minButton->resize(20, 20);
@@ -108,9 +105,9 @@ void Widget::init()
     //minButton->setIcon(QIcon(":/image/min"));
     //minButton->setStyleSheet("border:none; background-color:transparent;");
     minButton->setStyleSheet("QPushButton{border:none;}"
-                              "QPushButton{border-image: url(:/qq/btn_mini_normal.png);background-repeat: repeat-none; background-position:center;}"
-                              "QPushButton:hover{border-image: url(:/qq/btn_mini_down.png);background-repeat: repeat-none; background-position:center;}"
-                              "QPushButton:pressed{border-image: url(:/qq/btn_mini_down.png);background-repeat: repeat-none; background-position:center;}"
+                              "QPushButton{border-image: url(:/qq/resource_image/btn_mini_normal.png);background-repeat: repeat-none; background-position:center;}"
+                              "QPushButton:hover{border-image: url(:/qq/resource_image/btn_mini_down.png);background-repeat: repeat-none; background-position:center;}"
+                              "QPushButton:pressed{border-image: url(:/qq/resource_image/btn_mini_down.png);background-repeat: repeat-none; background-position:center;}"
                               );
 }
 

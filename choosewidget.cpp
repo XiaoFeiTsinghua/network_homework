@@ -71,7 +71,7 @@ void ChooseWidget::init_friends()
     for(int i = 0; i < num_of_groups; i++)
     {
         groupinfo gi = getGroupinfo(username, i + 1);
-        rootscontent[i] = new GroupWidget(gi.id, gi.name, gi.friendsingroup, this);
+        rootscontent[i] = new GroupWidget(gi.id, gi.name, gi.friendsingroup, gi.expand, this);
         roots[i] = new QTreeWidgetItem(friendstree);
         roots[i]->setSizeHint(0, QSize(200, 20));
         friendstree->setItemWidget(roots[i], 0, rootscontent[i]);
@@ -81,10 +81,48 @@ void ChooseWidget::init_friends()
     {
         friendinfo fi = getFriendinfo(username, i + 1);
         QString photofile = "./" + username + "/friendsphoto/" + fi.photo;
-        childscontent[i] = new FriendWidget(fi.id, fi.belongto, fi.studentnum, QPixmap(photofile), fi.name, fi.sign, this);
+        childscontent[i] = new FriendWidget(fi.id, fi.belongto, fi.studentnum, QPixmap(photofile), fi.name, fi.sign, fi.big, this);
         childs[i] = new QTreeWidgetItem(roots[fi.belongto - 1]);
         childs[i]->setSizeHint(0, QSize(200, 30));
         friendstree->setItemWidget(childs[i], 0, childscontent[i]);
+    }
+
+    for(int i = 0; i < num_of_groups; i++)
+    {
+        if(rootscontent[i]->expand == 1)
+        {
+            roots[i]->setExpanded(false);
+            roots[i]->setExpanded(true);
+        }
+        else
+        {
+            roots[i]->setExpanded(true);
+            roots[i]->setExpanded(false);
+        }
+    }
+
+    for(int i = 0; i < num_of_friends; i++)
+    {
+        if(childscontent[i]->isBig() == 1)
+        {
+            childscontent[i]->choose();
+            childs[i]->setSizeHint(0, childscontent[i]->size());
+        }
+        else
+        {
+            childscontent[i]->cancel_choose();
+            childs[i]->setSizeHint(0, childscontent[i]->size());
+        }
+    }
+
+    for(int i = 0; i < num_of_groups; i++)
+    {
+        bool state = roots[i]->isExpanded();
+        if(state == true)
+        {
+            roots[i]->setExpanded(false);
+            roots[i]->setExpanded(true);
+        }
     }
 }
 
@@ -164,11 +202,14 @@ void ChooseWidget::clicked(QTreeWidgetItem *item, int column)
    for(int i = 0; i < num_of_friends; i++)
    {
        childscontent[i]->cancel_choose();
+       childscontent[i]->setBig(0);
        childs[i]->setSizeHint(0, childscontent[i]->size());
    }
    FriendWidget* f = (FriendWidget*)friendstree->itemWidget(item, column);
    f->choose();
+   f->setBig(1);
    item->setSizeHint(0, f->size());
+
    for(int i = 0; i < num_of_groups; i++)
    {
        bool state = roots[i]->isExpanded();
@@ -264,14 +305,41 @@ void ChooseWidget::show_deletefriend_menu(QPoint pos)
 
 void ChooseWidget::delete_friend()
 {
+    set_group_expand();
+    set_friend_big();
     qDebug()<<"deletefriend";
     deleteFriend(username, friend_to_delete);
+
     refresh_friends();
 }
 
 void ChooseWidget::delete_group()
 {
+    set_group_expand();
+    set_friend_big();
     qDebug()<<"deletegroup";
     deleteGroup(username, group_to_delete);
     refresh_friends();
+}
+
+void ChooseWidget::set_group_expand()
+{
+    for(int i = 0; i < num_of_groups; i++)
+    {
+        if(roots[i]->isExpanded() == true)
+            setGroupexpand(username, i + 1, 1);
+        else
+            setGroupexpand(username, i + 1, 0);
+    }
+}
+
+void ChooseWidget::set_friend_big()
+{
+    for(int i = 0; i < num_of_friends; i++)
+    {
+        if(childscontent[i]->big == 1)
+            setFriendbig(username, i + 1, 1);
+        else
+            setFriendbig(username, i + 1, 0);
+    }
 }

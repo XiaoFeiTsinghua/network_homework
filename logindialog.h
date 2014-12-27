@@ -25,6 +25,8 @@
 #include <QBitmap>
 #include <QtGui>
 #include <QMovie>
+#include <QPalette>
+#include <QDateTime>
 #include "database.h"
 
 class LoginDialog : public QDialog
@@ -36,9 +38,10 @@ public:
     void init_keyEdit();
     QString getUsername();
 
+
 private:
     //QAxWidget *flash;
-    QLabel *logoLabel, *photoLabel;
+    QLabel *logoLabel, *photoLabel, *nameLabel;
     QCheckBox *autologCheck, *rememberCheck;
     QComboBox *userCombo;
     QLineEdit *keyEdit;
@@ -59,7 +62,7 @@ private:
 signals:
 
 public slots:
-
+    void judgeAuto();
 
 };
 

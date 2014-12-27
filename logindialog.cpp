@@ -5,6 +5,7 @@ LoginDialog::LoginDialog(QDialog *parent) :
 {
     logoLabel = new QLabel(this);
     photoLabel = new QLabel(this);
+    nameLabel = new QLabel(this);
     autologCheck = new QCheckBox(this);
     rememberCheck = new QCheckBox(this);
     userCombo = new QComboBox(this);
@@ -55,71 +56,86 @@ void LoginDialog::beautify()
     QPainter p(&bmp);
     p.setPen(Qt::NoPen);
     p.setBrush(Qt::black);
-    p.drawRoundedRect(bmp.rect(), 3, 3);
+    p.drawRoundedRect(bmp.rect(), 5, 5);
     setMask(bmp);//设置窗体遮罩
 
     //装饰，无边框
     this->setWindowFlags(Qt::FramelessWindowHint);
-    this->resize(400,300);
+    this->resize(430, 330);
 
-    logoLabel->resize(400,190);
-    logoLabel->move(0, -18);
-    QMovie *movie = new QMovie(":/gif/logbackground.gif");
+    //背景颜色
+    this->setAutoFillBackground(true);
+    QPalette palette;
+    palette.setColor(QPalette::Background, QColor(235,242,249));
+    this->setPalette(palette);
+
+    //各种控件的装饰
+    logoLabel->resize(430, 180);
+    logoLabel->move(0, 0);
+    QMovie *movie = new QMovie(":gif/resource_image/logbackground3.gif");
     logoLabel->setMovie(movie);
     movie->start();
-    //logoLabel->setPixmap(QPixmap(":/image/logo"));
 
-    photoLabel->resize(50,50);
-    photoLabel->move(30,200);
-    photoLabel->setPixmap(QPixmap(":/image/photo"));
+    photoLabel->resize(80,80);
+    photoLabel->move(40, 195);
+    //photoLabel->setPixmap(QPixmap(":/image/resource_image/photo"));
+    photoLabel->setStyleSheet("QLabel{border-image: url(:/image/resource_image/photo)}"
+                              "QLabel{ border-radius: 5px;}"
+                              );
 
-    userCombo->resize(200, 30);
-    userCombo->move(100, 180);
+
+    nameLabel->resize(260, 113);
+    nameLabel->move(75, 35);
+    nameLabel->setStyleSheet("QLabel{border-image: url(:/image/resource_image/dada.png)}");
+    //nameLabel->setPixmap(QPixmap(":/image/resource_image/dada.png"));
+
+    userCombo->resize(190, 30);
+    userCombo->move(135, 195);
     userCombo->setEditable(true);
     userCombo->setStyleSheet("QComboBox{ border: 1px solid rgb(173,173,173);}"
                              "QComboBox{ border-radius: 3px;}"
                              "QComboBox QAbstractItemView::item{height:25px;}"
-                             "QComboBox::down-arrow{image:url(:/qq/arrow_normal);}"
+                             "QComboBox::down-arrow{image:url(:/qq/resource_image/arrow_normal);}"
                              "QComboBox::drop-down{border:0px;}"
                              "QComboBox::hover{border-color: rgb(9, 163, 220);}"
-                             "QComboBox::down-arrow:hover{image:url(:/qq/arrow_hover);}");
+                             "QComboBox::down-arrow:hover{image:url(:/qq/resource_image/arrow_hover);}");
 
-    keyEdit->resize(200, 30);
-    keyEdit->move(100, 210);
+    keyEdit->resize(190, 30);
+    keyEdit->move(135, 225);
     keyEdit->setEchoMode(QLineEdit::Password);
     keyEdit->setStyleSheet("QLineEdit{ border: 1px solid rgb(173,173,173);}"
                            "QLineEdit{ border-radius: 3px;}"
                            "QLineEdit::hover{border-color: rgb(9, 163, 220);}");
 
-    autologCheck->resize(100,20);
-    autologCheck->move(200,245);
+    autologCheck->resize(100, 20);
+    autologCheck->move(260, 260);
     autologCheck->setText("自动登录");
-    autologCheck->setStyleSheet("QCheckBox::indicator:unchecked{image: url(:/qq/checkbox_uncheck_normal.png);}"
-                                "QCheckBox::indicator:unchecked:hover {image: url(:/qq/checkbox_uncheck_hightlight.png)}"
-                                "QCheckBox::indicator:unchecked:pressed {image: url(:/qq/checkbox_uncheck_hightlight.png);}"
-                                "QCheckBox::indicator:checked {image: url(:/qq/checkbox_check_normal.png);}"
-                                "QCheckBox::indicator:checked:hover {image: url(:/qq/checkbox_check_hightlight.png);}"
-                                "QCheckBox::indicator:checked:pressed {image: url(:/qq/checkbox_check_hightlight.png);}"
+    autologCheck->setStyleSheet("QCheckBox::indicator:unchecked{image: url(:/qq/resource_image/checkbox_uncheck_normal.png);}"
+                                "QCheckBox::indicator:unchecked:hover {image: url(:/qq/resource_image/checkbox_uncheck_hightlight.png)}"
+                                "QCheckBox::indicator:unchecked:pressed {image: url(:/qq/resource_image/checkbox_uncheck_hightlight.png);}"
+                                "QCheckBox::indicator:checked {image: url(:/qq/resource_image/checkbox_check_normal.png);}"
+                                "QCheckBox::indicator:checked:hover {image: url(:/qq/resource_image/checkbox_check_hightlight.png);}"
+                                "QCheckBox::indicator:checked:pressed {image: url(:/qq/resource_image/checkbox_check_hightlight.png);}"
                                 "QCheckBox{font: 12px Microsoft YaHei;}"
                                 "QCheckBox{color: gray;}"
                                 );
 
 
     rememberCheck->resize(100,20);
-    rememberCheck->move(100,245);
+    rememberCheck->move(135 ,260);
     rememberCheck->setText("记住密码");
-    rememberCheck->setStyleSheet("QCheckBox::indicator:unchecked{image: url(:/qq/checkbox_uncheck_normal.png);}"
-                                "QCheckBox::indicator:unchecked:hover {image: url(:/qq/checkbox_uncheck_hightlight.png)}"
-                                "QCheckBox::indicator:unchecked:pressed {image: url(:/qq/checkbox_uncheck_hightlight.png);}"
-                                "QCheckBox::indicator:checked {image: url(:/qq/checkbox_check_normal.png);}"
-                                "QCheckBox::indicator:checked:hover {image: url(:/qq/checkbox_check_hightlight.png);}"
-                                "QCheckBox::indicator:checked:pressed {image: url(:/qq/checkbox_check_hightlight.png);}"
+    rememberCheck->setStyleSheet("QCheckBox::indicator:unchecked{image: url(:/qq/resource_image/checkbox_uncheck_normal.png);}"
+                                 "QCheckBox::indicator:unchecked:hover {image: url(:/qq/resource_image/checkbox_uncheck_hightlight.png)}"
+                                 "QCheckBox::indicator:unchecked:pressed {image: url(:/qq/resource_image/checkbox_uncheck_hightlight.png);}"
+                                 "QCheckBox::indicator:checked {image: url(:/qq/resource_image/checkbox_check_normal.png);}"
+                                 "QCheckBox::indicator:checked:hover {image: url(:/qq/resource_image/checkbox_check_hightlight.png);}"
+                                 "QCheckBox::indicator:checked:pressed {image: url(:/qq/resource_image/checkbox_check_hightlight.png);}"
                                  "QCheckBox{font: 12px Microsoft YaHei;}"
                                  "QCheckBox{color: gray;}"
-                                );
+                                 );
 
-    loginButton->resize(200, 30);
-    loginButton->move(100, 270);
+    loginButton->resize(190, 30);
+    loginButton->move(135, 290);
     loginButton->setText("登    录");
     loginButton->setFlat(true);
     loginButton->setStyleSheet("QPushButton{border:none;border-radius:3px;}"
@@ -130,21 +146,21 @@ void LoginDialog::beautify()
                                "QPushButton{color: white;}"
                                );
 
-    exitButton->resize(25, 25);
-    exitButton->move(375, 0);
+    exitButton->resize(30, 30);
+    exitButton->move(400, 0);
     exitButton->setStyleSheet("QPushButton{border:none;}"
-                              "QPushButton{background-image: url(:/qq/tips_close_n.png);background-repeat: repeat-none; background-position:center;}"
-                              "QPushButton:hover{background-image: url(:/qq/tips_close_h.png);background-repeat: repeat-none; background-position:center;}"
-                              "QPushButton:pressed{background-image: url(:/qq/tips_close_p.png);background-repeat: repeat-none; background-position:center;}"
+                              "QPushButton{border-image: url(:/qq/resource_image/tips_close_n.png);background-repeat: repeat-none; background-position:center;}"
+                              "QPushButton:hover{border-image: url(:/qq/resource_image/tips_close_h.png);background-repeat: repeat-none; background-position:center;}"
+                              "QPushButton:pressed{border-image: url(:/qq/resource_image/tips_close_p.png);background-repeat: repeat-none; background-position:center;}"
                               );
 
-    minButton->resize(25, 25);
-    minButton->move(350, 0);
+    minButton->resize(30, 30);
+    minButton->move(370, 0);
     minButton->setStyleSheet("QPushButton{border:none;}"
-                              "QPushButton{border-image: url(:/qq/btn_mini_normal.png);background-repeat: repeat-none; background-position:center;}"
-                              "QPushButton:hover{border-image: url(:/qq/btn_mini_down.png);background-repeat: repeat-none; background-position:center;}"
-                              "QPushButton:pressed{border-image: url(:/qq/btn_mini_down.png);background-repeat: repeat-none; background-position:center;}"
-                              );
+                             "QPushButton{border-image: url(:/qq/resource_image/btn_mini_normal.png);background-repeat: repeat-none; background-position:center;}"
+                             "QPushButton:hover{border-image: url(:/qq/resource_image/btn_mini_down.png);background-repeat: repeat-none; background-position:center;}"
+                             "QPushButton:pressed{border-image: url(:/qq/resource_image/btn_mini_down.png);background-repeat: repeat-none; background-position:center;}"
+                             );
 
 }
 
@@ -162,28 +178,38 @@ void LoginDialog::on_loginButton_clicked()
         con();
         //qDebug()<<"NULL"<<endl;
     }
+
     log->write(bt);
+
     if (!log->waitForReadyRead(300))
     {
 
     }
     bt = log->readAll();
+
+    username = userCombo->currentText();
+    int flag = rememberCheck->isChecked();
+    int autoflag = autologCheck->isChecked();
+
+    setRemember(flag);
+    setAuto(autoflag);
+    addUser(username);
+
     if (bt == "lol")
     {
         //QMessageBox::information(this, tr("登录信息"),tr("成功！"));
         qDebug() << "lol";
-        accept();
+        QDialog::accept();
+        qDebug()<<"accept";
     }
     else
     {
         QMessageBox::information(this, tr("登录信息"),tr("失败！"));
+        if(autologCheck->isChecked())
+            autologCheck->setChecked(false);
         qDebug() << "false";
     }
-    username = userCombo->currentText();
-    int flag = rememberCheck->isChecked();
-    //qDebug()<<"check"<<flag;
-    setRemember(flag);
-    addUser(username);
+
 }
 
 void LoginDialog::init_userCombo()
@@ -199,6 +225,17 @@ void LoginDialog::init_userCombo()
 
 void LoginDialog::init_keyEdit()
 {
+    int autoflag = getAuto();
+    if(autoflag == 1)
+    {
+        autologCheck->setChecked(true);
+        keyEdit->setText("net2014");
+    }
+    else
+    {
+        autologCheck->setChecked(false);
+    }
+
     int flag = getRemember();
     if(flag == 1)//上次勾选了"记住密码"
     {
@@ -225,13 +262,14 @@ void LoginDialog::con()
 void LoginDialog::mouseMoveEvent(QMouseEvent *e)
 {
     if (e->buttons() == Qt::LeftButton)
-           move(e->globalPos() - dPos);
+        move(e->globalPos() - dPos);
+    judgeAuto();
 }
 
 void LoginDialog::mousePressEvent(QMouseEvent *mouseEvent)
 {
     if (mouseEvent->buttons() == Qt::LeftButton)
-           dPos = mouseEvent->pos();
+        dPos = mouseEvent->pos();
 }
 
 
@@ -249,4 +287,10 @@ bool LoginDialog::inButton(QPushButton *push, QPoint p)
         return false;
 }
 
-
+void LoginDialog::judgeAuto()
+{
+    if(autologCheck->isChecked() == true)
+    {
+        on_loginButton_clicked();
+    }
+}

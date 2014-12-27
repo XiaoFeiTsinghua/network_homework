@@ -1,49 +1,50 @@
 <RCC>
     <qresource prefix="/image">
-        <file alias="tray">tray.jpg</file>
-        <file alias="chats_not_chosen">chats_not_chosen.jpg</file>
-        <file alias="chats_chosen">chats_chosen.jpg</file>
-        <file alias="friends_chosen">friends_chosen.jpg</file>
-        <file alias="friends_not_chosen">friends_not_chosec.jpg</file>
-        <file alias="groups_chosen">groups_chosen.jpg</file>
-        <file alias="groups_not_chosen">groups_not_chosen.jpg</file>
-        <file alias="photo_gjq">photo_gjq.jpg</file>
-        <file alias="logo">logo.jpg</file>
-        <file alias="photo">photo.jpg</file>
-        <file alias="close">close.png</file>
-        <file alias="min">min.png</file>
-        <file alias="system_photo1">system_photo1.jpg</file>
-        <file alias="system_photo2">system_photo2.jpg</file>
-        <file alias="system_photo3">system_photo3.jpg</file>
+        <file>resource_image/tray.jpg</file>
+        <file>resource_image/chats_not_chosen.jpg</file>
+        <file>resource_image/system_photo1.jpg</file>
+        <file>resource_image/system_photo2.jpg</file>
+        <file>resource_image/system_photo3.jpg</file>
+        <file>resource_image/dada.png</file>
+        <file>resource_image/photo.jpg</file>
     </qresource>
     <qresource prefix="/qq">
-        <file>icon_contacts_hover.png</file>
-        <file>icon_contacts_normal.png</file>
-        <file>icon_contacts_selected.png</file>
-        <file>icon_group_hover.png</file>
-        <file>icon_group_normal.png</file>
-        <file>icon_group_selected.png</file>
-        <file>icon_last_hover.png</file>
-        <file>icon_last_normal.png</file>
-        <file>icon_last_selected.png</file>
-        <file>checkbox_check_hightlight.png</file>
-        <file>checkbox_check_normal.png</file>
-        <file>checkbox_pushed.png</file>
-        <file>checkbox_uncheck_hightlight.png</file>
-        <file>checkbox_uncheck_normal.png</file>
-        <file>login_bkg.png</file>
-        <file>tips_close_h.png</file>
-        <file>tips_close_n.png</file>
-        <file>tips_close_p.png</file>
-        <file>btn_mini_normal.png</file>
-        <file>btn_mini_down.png</file>
-        <file>authority_down.png</file>
-        <file>authority_hover.png</file>
-        <file>authority_normal.png</file>
-        <file>arrow_hover.png</file>
-        <file>arrow_normal.png</file>
+        <file>resource_image/arrow_hover.png</file>
+        <file>resource_image/arrow_normal.png</file>
+        <file>resource_image/authority_down.png</file>
+        <file>resource_image/authority_hover.png</file>
+        <file>resource_image/authority_normal.png</file>
+        <file>resource_image/btn_hover.png</file>
+        <file>resource_image/btn_mini_down.png</file>
+        <file>resource_image/btn_mini_normal.png</file>
+        <file>resource_image/btn_normal.png</file>
+        <file>resource_image/btn_push.png</file>
+        <file>resource_image/checkbox_check_hightlight.png</file>
+        <file>resource_image/checkbox_check_normal.png</file>
+        <file>resource_image/checkbox_pushed.png</file>
+        <file>resource_image/checkbox_uncheck_hightlight.png</file>
+        <file>resource_image/checkbox_uncheck_normal.png</file>
+        <file>resource_image/close.png</file>
+        <file>resource_image/icon_contacts_hover.png</file>
+        <file>resource_image/icon_contacts_normal.png</file>
+        <file>resource_image/icon_contacts_selected.png</file>
+        <file>resource_image/icon_group_hover.png</file>
+        <file>resource_image/icon_group_normal.png</file>
+        <file>resource_image/icon_group_selected.png</file>
+        <file>resource_image/icon_last_hover.png</file>
+        <file>resource_image/icon_last_normal.png</file>
+        <file>resource_image/icon_last_selected.png</file>
+        <file>resource_image/login_bkg.png</file>
+        <file>resource_image/tips_close_h.png</file>
+        <file>resource_image/tips_close_n.png</file>
+        <file>resource_image/tips_close_p.png</file>
     </qresource>
     <qresource prefix="/gif">
-        <file>logbackground.gif</file>
+        <file>resource_image/logbackground.gif</file>
+        <file>resource_image/logbackground1.gif</file>
+        <file>resource_image/logbackground2.gif</file>
+        <file>resource_image/logbackground3.gif</file>
+        <file>resource_image/photo1.gif</file>
+        <file>resource_image/photo2.gif</file>
     </qresource>
 </RCC>

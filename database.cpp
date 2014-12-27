@@ -13,6 +13,8 @@ void newHistroy()
     query.exec("create table loghistory(id varchar, studentnum varchar)");
     query.exec("create table remember(id varchar, checked varvhar)");
     query.exec("insert into remember values(1, 0)");
+    query.exec("create table auto(id varchar, checked varvhar)");
+    query.exec("insert into auto values(1, 0)");
 
 }
 
@@ -33,6 +35,23 @@ int getRemember()
     return remember;
 }
 
+int getAuto()
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");    //添加数据库驱动
+
+    db.setDatabaseName("history.db");  //在工程目录新建一个mytest.db的文件
+    if(!db.open())
+    {
+        qDebug()<<"cannot open database";
+    }
+    QSqlQuery query;//以下执行相关QSL语句
+    query.exec("select checked from auto where id == 1");
+    query.next();
+    int autopass = query.value(0).toInt();
+    qDebug()<<autopass;
+    return autopass;
+}
+
 void setRemember(int flag)
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");    //添加数据库驱动
@@ -44,6 +63,19 @@ void setRemember(int flag)
     }
     QSqlQuery query;//以下执行相关QSL语句
     query.exec("update remember set checked = " + QString::number(flag, 10) + " where id = 1");
+}
+
+void setAuto(int flag)
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");    //添加数据库驱动
+
+    db.setDatabaseName("history.db");  //在工程目录新建一个mytest.db的文件
+    if(!db.open())
+    {
+        qDebug()<<"cannot open database";
+    }
+    QSqlQuery query;//以下执行相关QSL语句
+    query.exec("update auto set checked = " + QString::number(flag, 10) + " where id = 1");
 }
 
 void addUser(QString username)
@@ -119,9 +151,9 @@ void newDatabase(QString username)
     query.exec("create table baseinfo(id varchar, name varchar, count varchar)");
     query.exec(QObject::tr("insert into baseinfo values(1,'好友分组数',1)"));
     query.exec(QObject::tr("insert into baseinfo values(2,'好友数',0)"));
-    query.exec("create table friendsgroup(id varchar, name varchar, friendsingroup varchar)");
-    query.exec("insert into friendsgroup values(1, '默认分组', 0)");
-    query.exec("create table friends(id varchar, belongto varchar, studentnum varchar, name varchar, photo varchar, sign varchar)");
+    query.exec("create table friendsgroup(id varchar, name varchar, friendsingroup varchar, expand varchar)");
+    query.exec("insert into friendsgroup values(1, '默认分组', 0, 0)");
+    query.exec("create table friends(id varchar, belongto varchar, studentnum varchar, name varchar, photo varchar, sign varchar, big varchar)");
 
 }
 
@@ -168,12 +200,13 @@ groupinfo getGroupinfo(QString username, int id)
         qDebug()<<"cannot open database";
     }
     QSqlQuery query;//以下执行相关QSL语句
-    query.exec("select id, name, friendsingroup from friendsgroup where id == " + QString("%1").arg(id));
+    query.exec("select id, name, friendsingroup, expand from friendsgroup where id == " + QString("%1").arg(id));
     query.next();
     groupinfo sth;
     sth.id = query.value(0).toInt();
     sth.name = query.value(1).toString();
     sth.friendsingroup = query.value(2).toInt();
+    sth.expand = query.value(3).toInt();
     return sth;
 }
 
@@ -187,7 +220,7 @@ friendinfo getFriendinfo(QString username, int id)
         qDebug()<<"cannot open database";
     }
     QSqlQuery query;//以下执行相关QSL语句
-    query.exec("select id, belongto, studentnum, name, photo, sign from friends where id == " + QString("%1").arg(id));
+    query.exec("select id, belongto, studentnum, name, photo, sign, big from friends where id == " + QString("%1").arg(id));
     query.next();
     friendinfo sb;
     sb.id = query.value(0).toInt();
@@ -196,7 +229,8 @@ friendinfo getFriendinfo(QString username, int id)
     sb.name = query.value(3).toString();
     sb.photo = query.value(4).toString();
     sb.sign = query.value(5).toString();
-    //qDebug() << sb.id;    qDebug() << sb.belongto;    qDebug() << sb.studentnum;    qDebug() << sb.name;    qDebug() << sb.photo;    qDebug() << sb.sign;
+    sb.big = query.value(6).toInt();
+    qDebug() << sb.id;    qDebug() << sb.belongto;    qDebug() << sb.studentnum;    qDebug() << sb.name;    qDebug() << sb.photo;    qDebug() << sb.sign; qDebug()<<sb.big;
     return sb;
 }
 
@@ -215,7 +249,8 @@ void newGroup(QString username, groupinfo newgi)
 
     QSqlQuery query;//以下执行相关QSL语句
     query.exec("update baseinfo set count = " + QString::number(temp, 10) + " where id = 1");
-    query.exec("insert into friendsgroup values(" + QString::number(newgi.id, 10) + ",'" + newgi.name + "'," + QString::number(newgi.friendsingroup, 10) + ")");
+    query.exec("insert into friendsgroup values(" + QString::number(newgi.id, 10) + ",'" + newgi.name + "'," + QString::number(newgi.friendsingroup, 10) + "," + QString::number(newgi.expand, 10) + ")");
+    qDebug()<<"insert into friendsgroup values(" + QString::number(newgi.id, 10) + ",'" + newgi.name + "'," + QString::number(newgi.friendsingroup, 10) + "," + QString::number(newgi.expand, 10) + ")";
 }
 
 void newFriend(QString username, friendinfo newfi)
@@ -234,7 +269,7 @@ void newFriend(QString username, friendinfo newfi)
     QSqlQuery query;//以下执行相关QSL语句
     query.exec("update baseinfo set count = " + QString::number(temp, 10) + " where id = 2");
     query.exec("insert into friends values(" + QString::number(newfi.id, 10) + "," + QString::number(newfi.belongto, 10)
-               + ",'" + newfi.studentnum + "','" + newfi.name + "','" + newfi.photo + "','" + newfi.sign + "')");
+               + ",'" + newfi.studentnum + "','" + newfi.name + "','" + newfi.photo + "','" + newfi.sign + "'," + QString::number(newfi.big, 10) + ")");
     int bt = newfi.belongto;
     query.exec("select friendsingroup from friendsgroup where id == " + QString::number(bt, 10));
     query.next();
@@ -282,6 +317,8 @@ void deleteGroup(QString username, int id)
     query.exec("update baseinfo set count = " + QString::number(temp, 10) + " where id = 1");
     qDebug()<<"update friendsgroup set id = id - 1 where id > " + QString::number(id, 10);
     query.exec("update friendsgroup set id = id - 1 where id > " + QString::number(id, 10));
+    qDebug()<<"update friends set belongto = belongto - 1 where belongto > "+ QString::number(id, 10);
+    query.exec("update friends set belongto = belongto - 1 where belongto > "+ QString::number(id, 10));
 
 
 }
@@ -312,6 +349,32 @@ void deleteFriend(QString username, int id)
     query.exec("update friends set id = id - 1 where id > " + QString::number(id, 10));
 }
 
+void setGroupexpand(QString username, int id, int expand)
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");    //添加数据库驱动
+
+    db.setDatabaseName("./" + username + "/" + username + ".db");
+    if(!db.open())
+    {
+        qDebug()<<"cannot open database";
+    }
+    QSqlQuery query;//以下执行相关QSL语句
+    query.exec("update friendsgroup set expand = " + QString::number(expand, 10) + " where id = " + QString::number(id, 10));
+}
+
+void setFriendbig(QString username, int id, int big)
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");    //添加数据库驱动
+
+    db.setDatabaseName("./" + username + "/" + username + ".db");
+    if(!db.open())
+    {
+        qDebug()<<"cannot open database";
+    }
+    QSqlQuery query;//以下执行相关QSL语句
+    query.exec("update friends set big = " + QString::number(big, 10) + " where id = " + QString::number(id, 10));
+}
+
 QString generateFilename()
 {
     QDateTime time = QDateTime::currentDateTime();//获取系统现在的时间
@@ -328,7 +391,7 @@ void newFolder(QString username)
     newDatabase(username);
     for(int i = 0; i < 3; i++)
     {
-        QPixmap system(":/image/system_photo" + QString::number(i + 1, 10));
+        QPixmap system(":/image/resource_image/system_photo" + QString::number(i + 1, 10));
         system.save("./" + username + "/friendsphoto/system_photo" + QString::number(i + 1, 10) + ".jpg");
     }
 }

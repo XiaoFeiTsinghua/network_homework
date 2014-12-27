@@ -58,7 +58,7 @@ void AddfriendWidget::init()
     photoBox->move(250, 50);
     for(int i = 0; i < 3; i++)
     {
-        QString photopath = ":/image/system_photo" + QString::number(i + 1, 10);
+        QString photopath = ":/image/resource_image/system_photo" + QString::number(i + 1, 10);
         QString photoname = "系统头像" + QString::number(i + 1, 10);
         photoBox->addItem(QIcon(photopath), photoname);
     }
@@ -77,6 +77,7 @@ void AddfriendWidget::emit_signal_infosend()
     fi.photo = "system_photo" + QString::number(photoBox->currentIndex() + 1, 10);
     //qDebug() << fi.photo;
     fi.sign = signEdit->text();
+    fi.big = 0;
     newFriend(username, fi);
     emit infoSend(fi);
     close();
