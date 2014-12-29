@@ -21,6 +21,7 @@ FriendWidget::FriendWidget(int id, int bt, QString num, QPixmap p, QString n, QS
     belongto = bt;
     studentnum = num;
     photopix = p;
+    showphoto = p;
     namestr = n;
     signstr = s;
     big = b;
@@ -33,7 +34,7 @@ void FriendWidget::init()
     photo->resize(20,20);
     photo->move(5, 5);
     photo->setScaledContents(true);
-    photo->setPixmap(photopix);
+    photo->setPixmap(showphoto);
 
     name->resize(100, 20);
     name->move(30, 5);
@@ -50,7 +51,7 @@ void FriendWidget::choose()
     photo->resize(40, 40);
     photo->move(5, 5);
     photo->setScaledContents(true);
-    photo->setPixmap(photopix);
+    photo->setPixmap(showphoto);
 
     name->resize(100, 20);
     name->move(50, 5);
@@ -74,4 +75,27 @@ int FriendWidget::isBig()
 void FriendWidget::setBig(int b)
 {
     big = b;
+}
+
+void FriendWidget::online()
+{
+    showphoto = photopix;
+}
+
+void FriendWidget::offline()
+{
+    QImage qimage = photopix.toImage();
+    cv::Mat mat = cv::Mat(qimage.height(), qimage.width(), CV_8UC4, (uchar*)qimage.bits(), qimage.bytesPerLine());
+    cv::Mat mat2 = cv::Mat(mat.rows, mat.cols, CV_8UC3 );
+    int from_to[] = { 0,0, 1,1, 2,2 };
+    cv::mixChannels( &mat, 1, &mat2, 1, from_to, 3 );
+    cvtColor(mat2, mat2, CV_RGB2GRAY);
+    cvtColor(mat2, mat2, CV_GRAY2BGR);
+    QImage* qimg = new QImage((unsigned char*)mat2.data, // uchar* data
+            mat2.cols, mat2.rows, // width height
+            mat2.step, //bytesPerLine
+            QImage::Format_RGB888);
+    //qimg->save("1.png");
+    QPixmap pix = QPixmap::fromImage(*qimg);
+    showphoto = pix;
 }

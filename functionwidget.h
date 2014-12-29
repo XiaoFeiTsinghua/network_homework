@@ -15,6 +15,7 @@ public:
     explicit FunctionWidget(QWidget *parent = 0);
     FunctionWidget(QString username, QWidget *parent = 0);
 
+
 private:
     QString username;
     QPushButton *addfriendButton, *addgroupButton, *cancelautoButton;

@@ -18,6 +18,7 @@ ChooseWidget::ChooseWidget(QString name, QWidget *parent) :
     friends = new HeadButton("icon_contacts", this);
     groups = new HeadButton("icon_group", this);
     zone = new HeadButton("qzone", this);
+    mobile = new HeadButton("main_panel_tab_inco", this);
     choice = new QButtonGroup(this);
     friendstree = new QTreeWidget(this);
     friendstree->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -31,6 +32,7 @@ ChooseWidget::ChooseWidget(QString name, QWidget *parent) :
     connect(friends, &HeadButton::clicked, this, &ChooseWidget::x_chosen);
     connect(groups, &HeadButton::clicked, this, &ChooseWidget::x_chosen);
     connect(zone, &HeadButton::clicked, this, &ChooseWidget::x_chosen);
+    connect(mobile, &HeadButton::clicked, this, &ChooseWidget::x_chosen);
     connect(friendstree, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)), this, SLOT(double_clicked(QTreeWidgetItem*,int)));
     connect(friendstree, SIGNAL(itemClicked(QTreeWidgetItem*,int)), this, SLOT(clicked(QTreeWidgetItem*,int)));
     connect(friendstree, &QTreeWidget::customContextMenuRequested, this, &ChooseWidget::show_deletefriend_menu);
@@ -42,19 +44,27 @@ ChooseWidget::ChooseWidget(QString name, QWidget *parent) :
 
 void ChooseWidget::init()
 {
+    this->resize(300, 530);
     chats->move(0, 0);
-    friends->move(75, 0);
-    groups->move(150, 0);
-    zone->move(225, 0);
+    friends->move(60, 0);
+    groups->move(120, 0);
+    zone->move(180, 0);
+    mobile->move(240, 0);
     choice->addButton(chats, 0);
     choice->addButton(friends, 1);
     choice->addButton(groups, 2);
     choice->addButton(zone, 3);
+    choice->addButton(mobile, 4);
 
     friendstree->move(0, 30);
-    friendstree->resize(275, 500);
+    friendstree->resize(300, 500);
     friendstree->setHeaderHidden(true);
     friendstree->setFrameStyle(QFrame::NoFrame);
+    friendstree->setStyleSheet("QTreeWidget::branch:has-children:!has-siblings:closed, QTreeWidget::branch:closed:has-children:has-siblings {border-image: none; image: url(:/qq/resource_image/MainPanel_FolderNode_collapseTexture.png);}"
+                              "QTreeWidget::branch:hover:has-children:!has-siblings:closed, QTreeWidget::branch:hover:closed:has-children:has-siblings::hover {border-image: none; image: url(:/qq/resource_image/MainPanel_FolderNode_collapseTextureHighlight.png);}"
+                               "QTreeWidget::branch:has-children:!has-siblings:open, QTreeWidget::branch:open:has-children:has-siblings {border-image: none; image: url(:/qq/resource_image/MainPanel_FolderNode_expandTexture.png);}"
+                               "QTreeWidget::branch:hover:has-children:!has-siblings:open, QTreeWidget::branch:hover:open:has-children:has-siblings::hover {border-image: none; image: url(:/qq/resource_image/MainPanel_FolderNode_expandTextureHighlight.png);}"
+                               );
 }
 
 void ChooseWidget::init_friends()
@@ -80,6 +90,7 @@ void ChooseWidget::init_friends()
         friendinfo fi = getFriendinfo(username, i + 1);
         QString photofile = "./" + username + "/friendsphoto/" + fi.photo;
         childscontent[i] = new FriendWidget(fi.id, fi.belongto, fi.studentnum, QPixmap(photofile), fi.name, fi.sign, fi.big, this);
+        childscontent[i]->offline();
         childs[i] = new QTreeWidgetItem(roots[fi.belongto - 1]);
         childs[i]->setSizeHint(0, QSize(200, 30));
         friendstree->setItemWidget(childs[i], 0, childscontent[i]);
@@ -128,9 +139,9 @@ void ChooseWidget::x_chosen()
 {
     int id = choice->checkedId();
     if(choice->button(id)->isChecked() == false)
-        choice->button(id)->isChecked() == true;
-    for(int i = 0; ((i < 4) && (i != id)); i++)
-        choice->button(i)->isChecked() == false;
+        choice->button(id)->setChecked(true);
+    for(int i = 0; ((i < 5) && (i != id)); i++)
+        choice->button(i)->setChecked(false);
     refresh();
 }
 
@@ -151,6 +162,10 @@ void ChooseWidget::refresh()
         break;
     case 3:
         friendstree->setVisible(false);
+        break;
+    case 4:
+        friendstree->setVisible(false);
+        break;
     }
     qDebug()<< "in chooseWidget::refresh() " << choice->checkedId();
 }

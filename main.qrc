@@ -44,6 +44,14 @@
         <file>resource_image/qzone_normal.png</file>
         <file>resource_image/qzone_hover.png</file>
         <file>resource_image/qzone_selected.png</file>
+        <file>resource_image/MainPanel_FolderNode_collapseTexture.png</file>
+        <file>resource_image/MainPanel_FolderNode_collapseTextureHighlight.png</file>
+        <file>resource_image/MainPanel_FolderNode_expandTexture.png</file>
+        <file>resource_image/MainPanel_FolderNode_expandTextureHighlight.png</file>
+        <file>resource_image/main_panel_tab_inco_hover.png</file>
+        <file>resource_image/main_panel_tab_inco_normal.png</file>
+        <file>resource_image/main_panel_tab_inco_selected.png</file>
+        <file>resource_image/QQlogo.png</file>
     </qresource>
     <qresource prefix="/gif">
         <file>resource_image/logbackground.gif</file>
@@ -52,5 +60,27 @@
         <file>resource_image/logbackground3.gif</file>
         <file>resource_image/photo1.gif</file>
         <file>resource_image/photo2.gif</file>
+    </qresource>
+    <qresource prefix="/photo">
+        <file>resource_image/7.png</file>
+        <file>resource_image/8.png</file>
+        <file>resource_image/9.png</file>
+        <file>resource_image/10.png</file>
+        <file>resource_image/11.png</file>
+        <file>resource_image/12.png</file>
+        <file>resource_image/13.png</file>
+        <file>resource_image/14.png</file>
+        <file>resource_image/15.png</file>
+        <file>resource_image/16.png</file>
+        <file>resource_image/17.png</file>
+        <file>resource_image/18.png</file>
+        <file>resource_image/19.png</file>
+        <file>resource_image/20.png</file>
+        <file>resource_image/1.png</file>
+        <file>resource_image/2.png</file>
+        <file>resource_image/3.png</file>
+        <file>resource_image/4.png</file>
+        <file>resource_image/5.png</file>
+        <file>resource_image/6.png</file>
     </qresource>
 </RCC>

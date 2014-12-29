@@ -6,6 +6,9 @@
 #include <QPixmap>
 #include <QString>
 #include <QDebug>
+#include <QImage>
+#include <opencv.hpp>
+#include <cv.h>
 
 class FriendWidget : public QWidget
 {
@@ -18,11 +21,13 @@ public:
     void cancel_choose();
     void setBig(int b);
     int isBig();
+    void online();
+    void offline();
 
     int id;
     int belongto;
     QString studentnum;
-    QPixmap photopix;
+    QPixmap photopix, showphoto;
     QString namestr;
     QString signstr;
     int big;

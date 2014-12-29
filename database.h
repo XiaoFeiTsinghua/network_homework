@@ -46,6 +46,7 @@ int getGroupsnum(QString username);
 groupinfo getGroupinfo(QString username, int id);
 friendinfo getFriendinfo(QString username, int id);
 void newGroup(QString username, groupinfo newgi);
+int existFriend(QString username, friendinfo newfi);
 void newFriend(QString username, friendinfo newfi);
 void deleteGroup(QString username, int id);
 void deleteFriend(QString username, int id);

@@ -294,32 +294,46 @@ void newGroup(QString username, groupinfo newgi)
     QSqlQuery query;//以下执行相关QSL语句
     query.exec("update baseinfo set count = " + QString::number(temp, 10) + " where id = 1");
     query.exec("insert into friendsgroup values(" + QString::number(newgi.id, 10) + ",'" + newgi.name + "'," + QString::number(newgi.friendsingroup, 10) + "," + QString::number(newgi.expand, 10) + ")");
-    qDebug()<<"insert into friendsgroup values(" + QString::number(newgi.id, 10) + ",'" + newgi.name + "'," + QString::number(newgi.friendsingroup, 10) + "," + QString::number(newgi.expand, 10) + ")";
+    //qDebug()<<"insert into friendsgroup values(" + QString::number(newgi.id, 10) + ",'" + newgi.name + "'," + QString::number(newgi.friendsingroup, 10) + "," + QString::number(newgi.expand, 10) + ")";
 }
-
-void newFriend(QString username, friendinfo newfi)
+int existFriend(QString username, friendinfo newfi)
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");    //添加数据库驱动
-
     db.setDatabaseName("./" + username + "/" + username + ".db");
     if(!db.open())
     {
         qDebug()<<"cannot open database";
     }
 
-    int temp = getFriendsnum(username);
-    temp++;
-
     QSqlQuery query;//以下执行相关QSL语句
-    query.exec("update baseinfo set count = " + QString::number(temp, 10) + " where id = 2");
-    query.exec("insert into friends values(" + QString::number(newfi.id, 10) + "," + QString::number(newfi.belongto, 10)
-               + ",'" + newfi.studentnum + "','" + newfi.name + "','" + newfi.photo + "','" + newfi.sign + "'," + QString::number(newfi.big, 10) + ")");
-    int bt = newfi.belongto;
-    query.exec("select friendsingroup from friendsgroup where id == " + QString::number(bt, 10));
-    query.next();
-    temp = query.value(0).toInt();
-    temp++;
-    query.exec("update friendsgroup set friendsingroup = " + QString::number(temp, 10) + " where id = " + QString::number(bt, 10));
+    query.exec("select id from friends where studentnum == " + newfi.studentnum);
+    int exist = query.next();
+    return exist;
+}
+
+void newFriend(QString username, friendinfo newfi)
+{    
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");    //添加数据库驱动
+
+        db.setDatabaseName("./" + username + "/" + username + ".db");
+        if(!db.open())
+        {
+            qDebug()<<"cannot open database";
+        }
+
+        int temp = getFriendsnum(username);
+        temp++;
+
+        QSqlQuery query;//以下执行相关QSL语句
+        query.exec("update baseinfo set count = " + QString::number(temp, 10) + " where id = 2");
+        query.exec("insert into friends values(" + QString::number(newfi.id, 10) + "," + QString::number(newfi.belongto, 10)
+                   + ",'" + newfi.studentnum + "','" + newfi.name + "','" + newfi.photo + "','" + newfi.sign + "'," + QString::number(newfi.big, 10) + ")");
+        int bt = newfi.belongto;
+        query.exec("select friendsingroup from friendsgroup where id == " + QString::number(bt, 10));
+        query.next();
+        temp = query.value(0).toInt();
+        temp++;
+        query.exec("update friendsgroup set friendsingroup = " + QString::number(temp, 10) + " where id = " + QString::number(bt, 10));
 }
 
 void deleteGroup(QString username, int id)
@@ -337,31 +351,31 @@ void deleteGroup(QString username, int id)
     QSqlQuery query;//以下执行相关QSL语句
     //将分组中的好友移动到默认分组
     query.exec("select friendsingroup from friendsgroup where id == " + QString::number(id, 10));
-    qDebug()<<"select friendsingroup from friendsgroup where id == " + QString::number(id, 10);
+    //qDebug()<<"select friendsingroup from friendsgroup where id == " + QString::number(id, 10);
 
     query.next();
     int num = query.value(0).toInt();
-    qDebug()<<num;
+    //qDebug()<<num;
     query.exec("select friendsingroup from friendsgroup where id == 1");
 
     query.next();
     int defaultnum = query.value(0).toInt();
-    qDebug()<<defaultnum;
+    //qDebug()<<defaultnum;
     defaultnum += num;
-    qDebug()<<defaultnum;
+    //qDebug()<<defaultnum;
     query.exec("update friendsgroup set friendsingroup = " + QString::number(defaultnum, 10) + " where id = 1");
-     qDebug()<<"update friendsgroup set friendsingroup = " + QString::number(defaultnum, 10) + " where id = 1";
+    //qDebug()<<"update friendsgroup set friendsingroup = " + QString::number(defaultnum, 10) + " where id = 1";
     query.exec("update friends set belongto = 1 where belongto = " + QString::number(id, 10));
-    qDebug()<<"update friends set belongto = 1 where belongto = " + QString::number(id, 10);
-     //删除分组
+    //qDebug()<<"update friends set belongto = 1 where belongto = " + QString::number(id, 10);
+    //删除分组
     query.exec("delete from friendsgroup where id = " + QString::number(id, 10));
     //分组总数减1
 
-    qDebug()<<"update baseinfo set count = " + QString::number(temp, 10) + " where id = 1";
+    //qDebug()<<"update baseinfo set count = " + QString::number(temp, 10) + " where id = 1";
     query.exec("update baseinfo set count = " + QString::number(temp, 10) + " where id = 1");
-    qDebug()<<"update friendsgroup set id = id - 1 where id > " + QString::number(id, 10);
+    //qDebug()<<"update friendsgroup set id = id - 1 where id > " + QString::number(id, 10);
     query.exec("update friendsgroup set id = id - 1 where id > " + QString::number(id, 10));
-    qDebug()<<"update friends set belongto = belongto - 1 where belongto > "+ QString::number(id, 10);
+    //qDebug()<<"update friends set belongto = belongto - 1 where belongto > "+ QString::number(id, 10);
     query.exec("update friends set belongto = belongto - 1 where belongto > "+ QString::number(id, 10));
 
 
@@ -379,7 +393,7 @@ void deleteFriend(QString username, int id)
 
     int temp = getFriendsnum(username);
     temp--;
-    qDebug()<<"deleting friend" << temp;
+   // qDebug()<<"deleting friend" << temp;
     QSqlQuery query;//以下执行相关QSL语句
     //所在分组好友数减1
     int bt;
@@ -437,6 +451,11 @@ void newFolder(QString username)
     {
         QPixmap system(":/image/resource_image/system_photo" + QString::number(i + 1, 10));
         system.save("./" + username + "/friendsphoto/system_photo" + QString::number(i + 1, 10) + ".jpg");
+    }
+    for(int i = 0; i < 20; i++)
+    {
+        QPixmap system(":/photo/resource_image/" + QString::number(i + 1, 10) + ".png");
+        system.save("./" + username + "/friendsphoto/" + QString::number(i + 1, 10) + ".png");
     }
 }
 
