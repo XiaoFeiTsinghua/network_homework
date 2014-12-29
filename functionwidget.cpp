@@ -13,6 +13,7 @@ FunctionWidget::FunctionWidget(QString name, QWidget *parent) :
     addgroupButton = new QPushButton(this);
     addfriendw = new AddfriendWidget(username);
     addgroupw = new AddgroupWidget(username);
+    cancelautoButton = new QPushButton(this);
 
     addfriendButton->resize(50, 30);
     addfriendButton->move(20, 0);
@@ -22,10 +23,16 @@ FunctionWidget::FunctionWidget(QString name, QWidget *parent) :
     addgroupButton->move(80, 0);
     addgroupButton->setText("添加分组");
 
+    cancelautoButton->resize(50, 30);
+    cancelautoButton->move(130, 0);
+    cancelautoButton->setText("取消自动登录");
+
+
     connect(addfriendButton, &QPushButton::clicked, this, &FunctionWidget::addfriend);
     connect(addfriendw, &AddfriendWidget::infoSend, this, &FunctionWidget::friendinfoRecv);
     connect(addgroupButton, &QPushButton::clicked, this, &FunctionWidget::addgroup);
     connect(addgroupw, &AddgroupWidget::infoSend, this, &FunctionWidget::groupinfoRecv);
+    connect(cancelautoButton, &QPushButton::clicked, this, &FunctionWidget::on_cancelautoButton_clicked);
 
 }
 
@@ -71,4 +78,9 @@ void FunctionWidget::groupinfoRecv(groupinfo gi)
 {
     emit added();
     qDebug() << gi.id << "miao";
+}
+
+void FunctionWidget::on_cancelautoButton_clicked()
+{
+    setAuto(0);
 }

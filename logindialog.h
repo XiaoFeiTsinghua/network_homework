@@ -41,11 +41,11 @@ public:
 
 private:
     //QAxWidget *flash;
-    QLabel *logoLabel, *photoLabel, *nameLabel;
+    QLabel *logoLabel, *photoLabel, *nameLabel, *tipsLabel, *warnLabel;
     QCheckBox *autologCheck, *rememberCheck;
     QComboBox *userCombo;
     QLineEdit *keyEdit;
-    QPushButton *loginButton, *exitButton, *minButton;
+    QPushButton *loginButton, *exitButton, *minButton, *clearuserButton, *findkeyButton, *shrinkButton;
     QPoint dPos;
     bool ismousepressed;
 
@@ -58,6 +58,10 @@ private:
     void mousePressEvent(QMouseEvent *e);
     bool inButton(QPushButton *push, QPoint p);
     void on_loginButton_clicked();
+    void on_clearuserButton_clicked();
+    void on_findkeyButton_clicked();
+    void on_shrinkButton_clicked();
+    void show_tips(QString message);
 
 signals:
 

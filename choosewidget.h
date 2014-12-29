@@ -30,9 +30,7 @@ public:
     void refresh_friends();
 
 private:
-    HeadButton *chats;
-    HeadButton *friends;
-    HeadButton *groups;
+    HeadButton *chats, *friends, *groups, *zone;
     QButtonGroup *choice;
 
     QTreeWidget *friendstree;

@@ -6,6 +6,8 @@ LoginDialog::LoginDialog(QDialog *parent) :
     logoLabel = new QLabel(this);
     photoLabel = new QLabel(this);
     nameLabel = new QLabel(this);
+    tipsLabel = new QLabel(this);
+    warnLabel = new QLabel(this);
     autologCheck = new QCheckBox(this);
     rememberCheck = new QCheckBox(this);
     userCombo = new QComboBox(this);
@@ -13,21 +15,32 @@ LoginDialog::LoginDialog(QDialog *parent) :
     loginButton = new QPushButton(this);
     exitButton = new QPushButton(this);
     minButton = new QPushButton(this);
+    clearuserButton = new QPushButton(this);
+    findkeyButton = new QPushButton(this);
+    shrinkButton = new QPushButton(this);
 
     connect(loginButton, &QPushButton::clicked, this, &LoginDialog::on_loginButton_clicked);
     connect(exitButton, &QPushButton::clicked, this, &LoginDialog::close);
     connect(minButton, &QPushButton::clicked, this, &LoginDialog::showMinimized);
+    connect(clearuserButton, &QPushButton::clicked, this, &LoginDialog::on_clearuserButton_clicked);
+    connect(findkeyButton, &QPushButton::clicked, this, &LoginDialog::on_findkeyButton_clicked);
+    connect(shrinkButton, &QPushButton::clicked, this, &LoginDialog::on_shrinkButton_clicked);
 
     this->setMouseTracking(true);
     logoLabel->setMouseTracking(true);
     exitButton->setMouseTracking(true);
+    minButton->setMouseTracking(true);
+    clearuserButton->setMouseTracking(true);
+    findkeyButton->setMouseTracking(true);
+
     beautify();
     //判断数据库是否存在
     QDir *temp = new QDir;
     bool exist = temp->exists("history.db");
 
     if(exist)
-        qDebug() << "exist";
+        ;
+        //qDebug() << "exist";
     else
         newHistroy();
 
@@ -49,6 +62,9 @@ QString LoginDialog::getUsername()
 //美化界面
 void LoginDialog::beautify()
 {
+    //装饰，无边框
+    this->resize(430, 330);
+
     //圆角
     setWindowFlags(Qt::FramelessWindowHint);
     QBitmap bmp(this->size());
@@ -56,12 +72,8 @@ void LoginDialog::beautify()
     QPainter p(&bmp);
     p.setPen(Qt::NoPen);
     p.setBrush(Qt::black);
-    p.drawRoundedRect(bmp.rect(), 5, 5);
+    p.drawRoundedRect(bmp.rect(), 3, 3);
     setMask(bmp);//设置窗体遮罩
-
-    //装饰，无边框
-    this->setWindowFlags(Qt::FramelessWindowHint);
-    this->resize(430, 330);
 
     //背景颜色
     this->setAutoFillBackground(true);
@@ -87,7 +99,17 @@ void LoginDialog::beautify()
     nameLabel->resize(260, 113);
     nameLabel->move(75, 35);
     nameLabel->setStyleSheet("QLabel{border-image: url(:/image/resource_image/dada.png)}");
-    //nameLabel->setPixmap(QPixmap(":/image/resource_image/dada.png"));
+
+    warnLabel->resize(30, 30);
+    warnLabel->move(0, 330);
+    warnLabel->setStyleSheet("QLabel{background-color:rgb(248, 243, 210)}"
+                             "QLabel{background-image: url(:/qq/resource_image/comment_send_warn.png); background-repeat: repeat-none; background-position:center;}"
+                             );
+
+    tipsLabel->resize(430, 30);
+    tipsLabel->move(30, 330);
+    tipsLabel->setStyleSheet("QLabel{background-color:rgb(248, 243, 210)}"
+                             "QLabel{font: 12px Microsoft YaHei;}");
 
     userCombo->resize(190, 30);
     userCombo->move(135, 195);
@@ -98,7 +120,9 @@ void LoginDialog::beautify()
                              "QComboBox::down-arrow{image:url(:/qq/resource_image/arrow_normal);}"
                              "QComboBox::drop-down{border:0px;}"
                              "QComboBox::hover{border-color: rgb(9, 163, 220);}"
-                             "QComboBox::down-arrow:hover{image:url(:/qq/resource_image/arrow_hover);}");
+                             "QComboBox::down-arrow:hover{image:url(:/qq/resource_image/arrow_hover);}"
+                             "QComboBox{font: 12px Microsoft YaHei;}"
+                             );
 
     keyEdit->resize(190, 30);
     keyEdit->move(135, 225);
@@ -162,6 +186,38 @@ void LoginDialog::beautify()
                              "QPushButton:pressed{border-image: url(:/qq/resource_image/btn_mini_down.png);background-repeat: repeat-none; background-position:center;}"
                              );
 
+    clearuserButton->resize(50, 30);
+    clearuserButton->move(335, 195);
+    clearuserButton->setText("清空历史");
+    clearuserButton->setStyleSheet("QPushButton{border:none;}"
+                                 "QPushButton{background-color:transparent;}"
+                                  "QPushButton{font: 12px Microsoft YaHei;}"
+                                  "QPushButton{color: rgb(65,149,231);}"
+                                  "QPushButton:hover{color:rgb(98,180,247);}"
+                                  "QPushButton:pressed{color:rgb(63,145,196);}"
+                                  );
+
+
+    findkeyButton->resize(50, 30);
+    findkeyButton->move(335, 225);
+    findkeyButton->setText("找回密码");
+    findkeyButton->setStyleSheet("QPushButton{border:none;}"
+                                 "QPushButton{background-color:transparent;}"
+                                  "QPushButton{font: 12px Microsoft YaHei;}"
+                                  "QPushButton{color: rgb(65,149,231);}"
+                                  "QPushButton:hover{color:rgb(98,180,247);}"
+                                  "QPushButton:pressed{color:rgb(63,145,196);}"
+                                  );
+
+    shrinkButton->resize(30, 30);
+    shrinkButton->move(400, 330);
+    shrinkButton->setStyleSheet("QPushButton{border:none;}"
+                             "QPushButton{background-color:rgb(248, 243, 210)}"
+                             "QPushButton{background-image: url(:/qq/resource_image/nextbtn_normal.png); background-repeat: repeat-none; background-position:center;}"
+                             "QPushButton:hover{background-image: url(:/qq/resource_image/nextbtn_highlight.png);background-repeat: repeat-none; background-position:center;}"
+                             "QPushButton:pressed{background-image: url(:/qq/resource_image/nextbtn_highlight.png);background-repeat: repeat-none; background-position:center;}"
+                             );
+
 }
 
 void LoginDialog::on_loginButton_clicked()
@@ -192,6 +248,7 @@ void LoginDialog::on_loginButton_clicked()
     int autoflag = autologCheck->isChecked();
 
     setRemember(flag);
+    setKey(pw);
     setAuto(autoflag);
     addUser(username);
 
@@ -200,24 +257,42 @@ void LoginDialog::on_loginButton_clicked()
         //QMessageBox::information(this, tr("登录信息"),tr("成功！"));
         qDebug() << "lol";
         QDialog::accept();
-        qDebug()<<"accept";
+        //qDebug()<<"accept";
     }
     else
     {
-        QMessageBox::information(this, tr("登录信息"),tr("失败！"));
+        //QMessageBox::information(this, tr("登录信息"),tr("失败！"));
+        show_tips("用户名或密码错误");
         if(autologCheck->isChecked())
+        {
             autologCheck->setChecked(false);
+            setAuto(false);
+        }
         qDebug() << "false";
     }
 
 }
 
+void LoginDialog::on_clearuserButton_clicked()
+{
+    clearUser();
+    userCombo->clear();
+    keyEdit->clear();
+}
+
+void LoginDialog::on_findkeyButton_clicked()
+{
+    show_tips("傻孩子，密码是net2014呀~");
+}
+
+
 void LoginDialog::init_userCombo()
 {
     int num_of_users = getUsernum();
-    //qDebug()<<num_of_users;
+    //qDebug()<<"user"<<num_of_users;
     for(int i = 0; i < num_of_users; i++)
     {
+        //qDebug()<<"jinrule";
         QString studentnum = getUser(i + 1);
         userCombo->addItem(studentnum);
     }
@@ -226,10 +301,11 @@ void LoginDialog::init_userCombo()
 void LoginDialog::init_keyEdit()
 {
     int autoflag = getAuto();
-    if(autoflag == 1)
+    if(autoflag == 1)   //自动登录
     {
         autologCheck->setChecked(true);
-        keyEdit->setText("net2014");
+        QString key = getKey();
+        keyEdit->setText(key);
     }
     else
     {
@@ -240,7 +316,8 @@ void LoginDialog::init_keyEdit()
     if(flag == 1)//上次勾选了"记住密码"
     {
         rememberCheck->setChecked(true);
-        keyEdit->setText("net2014");
+        QString key = getKey();
+        keyEdit->setText(key);
     }
     else
     {
@@ -261,9 +338,18 @@ void LoginDialog::con()
 
 void LoginDialog::mouseMoveEvent(QMouseEvent *e)
 {
+    QPoint pos = e->pos();
+    if(inButton(clearuserButton, pos) || (inButton(findkeyButton, pos)))
+    {
+        setCursor(Qt::PointingHandCursor);
+    }
+    else
+        setCursor(Qt::ArrowCursor);
+
     if (e->buttons() == Qt::LeftButton)
         move(e->globalPos() - dPos);
     judgeAuto();
+
 }
 
 void LoginDialog::mousePressEvent(QMouseEvent *mouseEvent)
@@ -289,8 +375,38 @@ bool LoginDialog::inButton(QPushButton *push, QPoint p)
 
 void LoginDialog::judgeAuto()
 {
-    if(autologCheck->isChecked() == true)
+    if(getAuto() == 1)
     {
         on_loginButton_clicked();
     }
+}
+
+
+void LoginDialog::show_tips(QString message)
+{
+    qDebug()<<"tip";
+    this->resize(430, 360);
+    //圆角
+    QBitmap bmp(this->size());
+    bmp.fill();
+    QPainter p(&bmp);
+    p.setPen(Qt::NoPen);
+    p.setBrush(Qt::black);
+    p.drawRoundedRect(bmp.rect(), 3, 3);
+    setMask(bmp);//设置窗体遮罩
+    tipsLabel->setText(message);
+
+}
+
+void LoginDialog::on_shrinkButton_clicked()
+{
+    this->resize(430, 330);
+    //圆角
+    QBitmap bmp(this->size());
+    bmp.fill();
+    QPainter p(&bmp);
+    p.setPen(Qt::NoPen);
+    p.setBrush(Qt::black);
+    p.drawRoundedRect(bmp.rect(), 3, 3);
+    setMask(bmp);//设置窗体遮罩
 }

@@ -16,7 +16,7 @@ HeadButton::HeadButton(QString filename, QWidget *parent) :
     this->setStyleSheet(s + s1 + s2 + s3);
     this->setCheckable(true);
 
-    this->resize(50, 30);
+    this->resize(75, 30);
 
 }
 

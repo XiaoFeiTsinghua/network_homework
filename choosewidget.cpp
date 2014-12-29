@@ -7,13 +7,7 @@
 ChooseWidget::ChooseWidget(QWidget *parent) :
     QWidget(parent)
 {
-    chats = new HeadButton("icon_last", this);
-    friends = new HeadButton("icon_contacts", this);
-    groups = new HeadButton("icon_group", this);
-    choice = new QButtonGroup(this);
-    friendstree = new QTreeWidget(this);
-    deletefriendAction = new QAction(tr("删除好友"), this);
-    deletegroupAction = new QAction(tr("删除分组"), this);
+
 }
 
 ChooseWidget::ChooseWidget(QString name, QWidget *parent) :
@@ -23,6 +17,7 @@ ChooseWidget::ChooseWidget(QString name, QWidget *parent) :
     chats = new HeadButton("icon_last", this);
     friends = new HeadButton("icon_contacts", this);
     groups = new HeadButton("icon_group", this);
+    zone = new HeadButton("qzone", this);
     choice = new QButtonGroup(this);
     friendstree = new QTreeWidget(this);
     friendstree->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -35,6 +30,7 @@ ChooseWidget::ChooseWidget(QString name, QWidget *parent) :
     connect(chats, &HeadButton::clicked, this, &ChooseWidget::x_chosen);
     connect(friends, &HeadButton::clicked, this, &ChooseWidget::x_chosen);
     connect(groups, &HeadButton::clicked, this, &ChooseWidget::x_chosen);
+    connect(zone, &HeadButton::clicked, this, &ChooseWidget::x_chosen);
     connect(friendstree, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)), this, SLOT(double_clicked(QTreeWidgetItem*,int)));
     connect(friendstree, SIGNAL(itemClicked(QTreeWidgetItem*,int)), this, SLOT(clicked(QTreeWidgetItem*,int)));
     connect(friendstree, &QTreeWidget::customContextMenuRequested, this, &ChooseWidget::show_deletefriend_menu);
@@ -47,11 +43,13 @@ ChooseWidget::ChooseWidget(QString name, QWidget *parent) :
 void ChooseWidget::init()
 {
     chats->move(0, 0);
-    friends->move(60, 0);
-    groups->move(120, 0);
+    friends->move(75, 0);
+    groups->move(150, 0);
+    zone->move(225, 0);
     choice->addButton(chats, 0);
     choice->addButton(friends, 1);
     choice->addButton(groups, 2);
+    choice->addButton(zone, 3);
 
     friendstree->move(0, 30);
     friendstree->resize(275, 500);
@@ -131,7 +129,7 @@ void ChooseWidget::x_chosen()
     int id = choice->checkedId();
     if(choice->button(id)->isChecked() == false)
         choice->button(id)->isChecked() == true;
-    for(int i = 0; ((i < 3) && (i != id)); i++)
+    for(int i = 0; ((i < 4) && (i != id)); i++)
         choice->button(i)->isChecked() == false;
     refresh();
 }
@@ -151,6 +149,8 @@ void ChooseWidget::refresh()
     case 2:
         friendstree->setVisible(false);
         break;
+    case 3:
+        friendstree->setVisible(false);
     }
     qDebug()<< "in chooseWidget::refresh() " << choice->checkedId();
 }

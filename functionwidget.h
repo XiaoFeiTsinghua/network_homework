@@ -17,7 +17,7 @@ public:
 
 private:
     QString username;
-    QPushButton *addfriendButton, *addgroupButton;
+    QPushButton *addfriendButton, *addgroupButton, *cancelautoButton;
 
     AddfriendWidget *addfriendw;
     AddgroupWidget *addgroupw;
@@ -30,7 +30,7 @@ public slots:
     void addgroup();
     void friendinfoRecv(friendinfo fi); //消息接收 槽函数
     void groupinfoRecv(groupinfo gi); //消息接收 槽函数
-
+    void on_cancelautoButton_clicked();//取消登录
 };
 
 #endif // FUNCTIONWIDGET_H

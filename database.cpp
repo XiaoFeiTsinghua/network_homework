@@ -13,6 +13,7 @@ void newHistroy()
     query.exec("create table loghistory(id varchar, studentnum varchar)");
     query.exec("create table remember(id varchar, checked varvhar)");
     query.exec("insert into remember values(1, 0)");
+    query.exec("insert into remember values(2, 0)");
     query.exec("create table auto(id varchar, checked varvhar)");
     query.exec("insert into auto values(1, 0)");
 
@@ -33,6 +34,23 @@ int getRemember()
     int remember = query.value(0).toInt();
     qDebug()<<remember;
     return remember;
+}
+
+QString getKey()
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");    //添加数据库驱动
+
+    db.setDatabaseName("history.db");  //在工程目录新建一个mytest.db的文件
+    if(!db.open())
+    {
+        qDebug()<<"cannot open database";
+    }
+    QSqlQuery query;//以下执行相关QSL语句
+    query.exec("select checked from remember where id == 2");
+    query.next();
+    QString key = query.value(0).toString();
+    qDebug()<<key;
+    return key;
 }
 
 int getAuto()
@@ -63,6 +81,19 @@ void setRemember(int flag)
     }
     QSqlQuery query;//以下执行相关QSL语句
     query.exec("update remember set checked = " + QString::number(flag, 10) + " where id = 1");
+}
+
+void setKey(QString key)
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");    //添加数据库驱动
+
+    db.setDatabaseName("history.db");  //在工程目录新建一个mytest.db的文件
+    if(!db.open())
+    {
+        qDebug()<<"cannot open database";
+    }
+    QSqlQuery query;//以下执行相关QSL语句
+    query.exec("update remember set checked = '" + key + "' where id = 2");
 }
 
 void setAuto(int flag)
@@ -99,6 +130,19 @@ void addUser(QString username)
         query.exec("insert into loghistory values(" + QString::number(temp, 10) + ", '" + username + "')");
         //qDebug()<<"insert into loghistory values(" + QString::number(temp, 10) + ", '" + username + "')";
     }
+}
+
+void clearUser()
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");    //添加数据库驱动
+
+    db.setDatabaseName("history.db");  //在工程目录新建一个mytest.db的文件
+    if(!db.open())
+    {
+        qDebug()<<"cannot open database";
+    }
+    QSqlQuery query;//以下执行相关QSL语句
+    query.exec("delete from loghistory where id >= 1");
 }
 
 int getUsernum()

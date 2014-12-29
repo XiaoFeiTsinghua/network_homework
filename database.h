@@ -29,10 +29,13 @@ struct friendinfo
 
 void newHistroy();
 int getRemember();
+QString getKey();
 int getAuto();
 void setRemember(int flag);
+void setKey(QString key);
 void setAuto(int flag);
 void addUser(QString username);
+void clearUser();
 int getUsernum();
 QString getUser(int id);
 

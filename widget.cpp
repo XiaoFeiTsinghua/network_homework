@@ -9,7 +9,7 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
-    this->resize(275, 600);
+    this->resize(300, 700);
     choosew = new ChooseWidget(this);
     functionw = new FunctionWidget(username, this);
     exitButton = new QPushButton(this);
@@ -25,7 +25,7 @@ Widget::Widget(QString name, QWidget *parent) :
 {
     username = name;
     ui->setupUi(this);
-    this->resize(275, 600);
+    this->resize(300, 700);
     //判断该用户是否曾在本机登录，如果没有，创建文件夹以保存其信息
     QDir *temp = new QDir;
     bool exist = temp->exists(username);
@@ -82,16 +82,16 @@ void Widget::setUsername(QString name)
 
 void Widget::init()
 {
-    this->resize(275, 600);
+    this->resize(300, 700);
     this->setWindowFlags(Qt::FramelessWindowHint);
-    choosew->resize(275, 500);
-    choosew->move(0, 50);
+    choosew->resize(300, 500);
+    choosew->move(0, 170);
 
-    functionw->resize(275, 50);
-    functionw->move(0, 550);
+    functionw->resize(300, 30);
+    functionw->move(0, 670);
 
-    exitButton->resize(20, 20);
-    exitButton->move(255, 0);
+    exitButton->resize(25, 25);
+    exitButton->move(275, 0);
     //exitButton->setIcon(QIcon(":/image/close"));
     //exitButton->setStyleSheet("border:none; background-color:transparent;");
     exitButton->setStyleSheet("QPushButton{border:none;}"
@@ -100,8 +100,8 @@ void Widget::init()
                               "QPushButton:pressed{background-image: url(:/qq/resource_image/tips_close_p.png);background-repeat: repeat-none; background-position:center;}"
                               );
 
-    minButton->resize(20, 20);
-    minButton->move(235, 0);
+    minButton->resize(25, 25);
+    minButton->move(250, 0);
     //minButton->setIcon(QIcon(":/image/min"));
     //minButton->setStyleSheet("border:none; background-color:transparent;");
     minButton->setStyleSheet("QPushButton{border:none;}"
