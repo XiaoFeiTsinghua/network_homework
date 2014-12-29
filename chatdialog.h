@@ -35,6 +35,10 @@ private slots:
 
     void on_pushButton_clicked();
 
+ //  void on_ChatRecord_clicked();
+
+    void on_ChatRe_clicked();
+
 signals:
     void send_msg(QString id, QString msg);
 
@@ -42,9 +46,6 @@ signals:
 private:
     Ui::ChatDialog *ui;
     QString msg_tobesent;
-
-
-
     QString id;
 };
 
