@@ -47,6 +47,7 @@ private:
     Ui::ChatDialog *ui;
     QString msg_tobesent;
     QString id;
+    int Recflag;
 };
 
 

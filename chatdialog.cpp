@@ -19,7 +19,8 @@ ChatDialog::ChatDialog(QString id, QWidget *parent) :
     ui(new Ui::ChatDialog)
 {
     ui->setupUi(this);
-
+    this->setFixedSize(472,450);
+    Recflag=0;
     //QKeyEvent *ev;
     connect(ui->msgTxtEdit, SIGNAL(send_text()), this, SLOT(on_sendBtn_clicked()));
     //this->eventFilter(ui->msgTxtEdit,ev);
@@ -155,9 +156,28 @@ void ChatDialog::on_pushButton_clicked()
 
 void ChatDialog::on_ChatRe_clicked()
 {
-       ChatRecord * a;
-        a = new ChatRecord(this);
-        a->id=this->id;
-        qDebug()<<"get a id"<<a->id;
-        a->show();
+    if(Recflag==0) {this->setFixedSize(740,450); Recflag=1;}
+    else {this->setFixedSize(472,450); Recflag=0;}
+    QString fileName = id+".txt";
+    QFile f(fileName);
+    //ui->label->setText("对象："+id);
+    qDebug() << "ChatRecord id--"<<id;
+     if(!f.open(QIODevice::ReadOnly | QIODevice::Text))
+     {
+          QMessageBox::warning(this,"sdf","can't open",QMessageBox::Yes);
+
+     }
+     else{
+     ui->textBrowser->setCurrentFont(QFont("宋体",12));
+     QTextStream txtInput(&f);
+     QString lineStr;
+    ui->textBrowser->clear();
+     while(!txtInput.atEnd())
+     {
+         lineStr = txtInput.readLine();
+         ui->textBrowser->append(lineStr);
+     }
+     }
+     f.close();
+
 }
