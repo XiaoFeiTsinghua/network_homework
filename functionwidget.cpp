@@ -14,10 +14,29 @@ FunctionWidget::FunctionWidget(QString name, QWidget *parent) :
     addfriendw = new AddfriendWidget(username);
     addgroupw = new AddgroupWidget(username);
     cancelautoButton = new QPushButton(this);
+    settingButton = new QPushButton(this);
 
-    addfriendButton->resize(50, 30);
-    addfriendButton->move(20, 0);
+    addfriendButton->resize(50, 25);
+    addfriendButton->move(200, 0);
     addfriendButton->setText("查找");
+    addfriendButton->setStyleSheet("QPushButton{border:none;border-radius:3px;}"
+                                   "QPushButton{background-color:transparent}"
+                                   "QPushButton{background-image: url(:/qq/resource_image/find.png); background-repeat: repeat-none; background-position:left;}"
+                                   "QPushButton:hover{background-image: url(:/qq/resource_image/find_hover.png);background-repeat: repeat-none; background-position:left;}"
+                                   "QPushButton:pressed{background-image: url(:/qq/resource_image/find_down.png);background-repeat: repeat-none; background-position:left;}"
+                                   "QPushButton:hover{border:1px solid gray;border-radius:3px;}"
+                                   "QPushButton{text-align : right;}"
+                                   "QPushButton{font: 12px Microsoft YaHei;}"
+                                   "QPushButton{color: black;}"
+                                   );
+    settingButton->resize(25, 25);
+    settingButton->move(35, 0);
+    settingButton->setStyleSheet("QPushButton{border:none;border-radius:3px;}"
+                                 "QPushButton{background-color:transparent}"
+                                 "QPushButton{background-image: url(:/qq/resource_image/Tools.png); background-repeat: repeat-none; background-position:left;}"
+                                 "QPushButton:hover{background-image: url(:/qq/resource_image/tools_hover.png);background-repeat: repeat-none; background-position:left;}"
+                                 "QPushButton:pressed{background-image: url(:/qq/resource_image/tools_down.png);background-repeat: repeat-none; background-position:left;}"
+                                 "QPushButton:hover{border:1px solid gray;border-radius:3px;}");
 
     addgroupButton->resize(50, 30);
     addgroupButton->move(80, 0);

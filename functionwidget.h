@@ -18,7 +18,7 @@ public:
 
 private:
     QString username;
-    QPushButton *addfriendButton, *addgroupButton, *cancelautoButton;
+    QPushButton *addfriendButton, *addgroupButton, *cancelautoButton, *settingButton;
 
     AddfriendWidget *addfriendw;
     AddgroupWidget *addgroupw;

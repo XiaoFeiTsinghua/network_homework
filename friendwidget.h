@@ -36,6 +36,7 @@ signals:
 public slots:
 private:
     QLabel *photo;
+    QLabel *numLabel;
     QLabel *name;
     QLabel *sign;
 };

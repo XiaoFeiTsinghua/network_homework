@@ -5,6 +5,7 @@ FriendWidget::FriendWidget(QWidget *parent) :
 {
     this->resize(275, 30);
     photo = new QLabel(this);
+    numLabel = new QLabel(this);
     name = new QLabel(this);
     sign = new QLabel(this);
     qDebug()<<"1"<<endl;
@@ -16,6 +17,7 @@ FriendWidget::FriendWidget(int id, int bt, QString num, QPixmap p, QString n, QS
 {
     this->resize(275, 30);
     photo = new QLabel(this);
+    numLabel = new QLabel(this);
     name = new QLabel(this);
     sign = new QLabel(this);
     belongto = bt;
@@ -36,6 +38,10 @@ void FriendWidget::init()
     photo->setScaledContents(true);
     photo->setPixmap(showphoto);
 
+    numLabel->resize(100, 20);
+    numLabel->move(100, 5);
+    numLabel->setText(studentnum);
+
     name->resize(100, 20);
     name->move(30, 5);
     name->setText(namestr);
@@ -53,8 +59,12 @@ void FriendWidget::choose()
     photo->setScaledContents(true);
     photo->setPixmap(showphoto);
 
+    numLabel->resize(100, 20);
+    numLabel->move(60, 5);
+    numLabel->setText(studentnum);
+
     name->resize(100, 20);
-    name->move(50, 5);
+    name->move(150, 5);
     name->setText(namestr);
 
     sign->resize(100, 20);

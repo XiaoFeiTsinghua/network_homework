@@ -28,6 +28,7 @@ public:
     void x_chosen();
     void refresh();
     void refresh_friends();
+    int isOnline(friendinfo f);
 
 private:
     HeadButton *chats, *friends, *groups, *zone, *mobile;

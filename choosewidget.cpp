@@ -90,7 +90,10 @@ void ChooseWidget::init_friends()
         friendinfo fi = getFriendinfo(username, i + 1);
         QString photofile = "./" + username + "/friendsphoto/" + fi.photo;
         childscontent[i] = new FriendWidget(fi.id, fi.belongto, fi.studentnum, QPixmap(photofile), fi.name, fi.sign, fi.big, this);
-        childscontent[i]->offline();
+        if(isOnline(fi) == 0)
+            childscontent[i]->offline();
+        else
+            childscontent[i]->online();
         childs[i] = new QTreeWidgetItem(roots[fi.belongto - 1]);
         childs[i]->setSizeHint(0, QSize(200, 30));
         friendstree->setItemWidget(childs[i], 0, childscontent[i]);
@@ -356,5 +359,33 @@ void ChooseWidget::set_friend_big()
             setFriendbig(username, i + 1, 1);
         else
             setFriendbig(username, i + 1, 0);
+    }
+}
+
+int ChooseWidget::isOnline(friendinfo f)
+{
+    QTcpSocket* check = new QTcpSocket(this);
+    check->connectToHost("166.111.180.60", 8000);
+    QString st = "q" + f.studentnum;
+    QByteArray bt;
+    bt.append(st);
+    qDebug()<<"st"<<st;
+    check->write(bt);
+    if (!check->waitForReadyRead(300))
+    {
+
+    }
+    bt = check->readAll();
+    qDebug()<<"bt"<<bt;
+    if (bt == "n")
+    {
+        //QMessageBox::information(this, tr("登录信息"), tr("查无此人！"));
+        qDebug()<<"offline" << f.studentnum;
+        return 0;
+    }
+    else
+    {
+        qDebug()<<"online" << f.studentnum;
+        return 1;
     }
 }

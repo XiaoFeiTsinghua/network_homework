@@ -11,6 +11,7 @@
 #include <QFileDialog>
 #include<QTextStream>
 #include<chatrecord.h>
+#include <QPainter>
 //#include<stdio.h>
 
 ChatDialog::ChatDialog(QString id, QWidget *parent) :
@@ -19,19 +20,43 @@ ChatDialog::ChatDialog(QString id, QWidget *parent) :
     ui(new Ui::ChatDialog)
 {
     ui->setupUi(this);
-    this->setFixedSize(472,450);
     Recflag=0;
+    exitButton = new QPushButton(this);
+    minButton = new QPushButton(this);
     //QKeyEvent *ev;
     connect(ui->msgTxtEdit, SIGNAL(send_text()), this, SLOT(on_sendBtn_clicked()));
+    connect(exitButton, &QPushButton::clicked, this, &ChatDialog::close);
+        connect(minButton, &QPushButton::clicked, this, &ChatDialog::showMinimized);
     //this->eventFilter(ui->msgTxtEdit,ev);
      //this->msgTxtEdit::keyPressEvent ( ev );
+        init();
 }
 
 ChatDialog::~ChatDialog()
 {
     delete ui;
 }
+void ChatDialog::init()
+{
+    this->resize(700, 500);
+    //圆角
+        this->setWindowFlags(Qt::FramelessWindowHint);
+        QBitmap bmp(this->size());
+        bmp.fill();
+        QPainter p(&bmp);
+        p.setPen(Qt::NoPen);
+        p.setBrush(Qt::black);
+        p.drawRoundedRect(bmp.rect(), 3, 3);
+        this->setMask(bmp);//设置窗体遮罩
 
+        //背景颜色
+        this->setAutoFillBackground(true);
+        QPalette palette;
+        palette.setColor(QPalette::Background, QColor(235,242,249));
+        this->setPalette(palette);
+
+
+}
 void ChatDialog::rec_msg(QString id, QString msg)
 {
     if ( id == this->id )

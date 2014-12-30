@@ -6,6 +6,8 @@
 #include <QMainWindow>
 #include "mtextedit.h"
 #include <QtNetwork>
+#include <QPushButton>
+#include <QBitmap>
 
 namespace Ui {
 class ChatDialog;
@@ -18,6 +20,7 @@ class ChatDialog : public QMainWindow
 public:
     explicit ChatDialog(QString id, QWidget *parent = 0);
     ~ChatDialog();
+    void init();
     //void msgTxtEdit::keyPressEvent ( QKeyEvent * ev );
     //bool eventFilter(QObject *obj, QKeyEvent * ev);
 private slots:
@@ -48,6 +51,7 @@ private:
     QString msg_tobesent;
     QString id;
     int Recflag;
+    QPushButton *exitButton, *minButton;
 };
 
 
